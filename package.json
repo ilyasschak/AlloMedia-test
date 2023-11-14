@@ -1,0 +1,9 @@
+{
+    "scripts": {
+      "install-all": "cd Server && npm install && cd ../client && npm install",
+      "start-all": "concurrently \"npm --prefix ./Server run dev\" \"npm --prefix ./client run dev\""
+    },
+    "dependencies": {
+      "concurrently": "^8.2.2"
+    }
+}
