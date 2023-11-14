@@ -1,0 +1,133 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+  --background-color : rgb(235, 242, 255);
+}
+.dark{
+  --background-color : rgb(0, 30, 62);
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Urbanist', sans-serif;
+}
+#root{
+  background-image: url(./assets/images/pexels-norma-mortenson-4392030.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+nav button {
+  width: max-content !important;
+}
+
+.authentication{
+  height: 100vh;
+  width: 100vw;
+}
+
+.authentication{
+  background-color: rgba(0, 166, 255, 0.263);
+  display:  flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+form{
+  background-color: white;
+  padding:4em 1em;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 40%;
+  min-width: 480px;
+  min-width: 320px;
+  align-items: center;
+}
+form h1{
+  margin-bottom: 1em;
+  width: 70%;
+
+}
+form input,form button{
+  min-width: 280px;
+  padding: .7em 1em;
+  font-size: large;
+  background-color: rgba(128, 128, 128, 0.126);
+  border: none;
+  border-radius: .5em;
+}
+form > div{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+form input{
+  border-left: 3px solid #00CA7D;
+  border-radius: 0 .5em .5em 0;
+  width: 100%;
+}
+input.invalid{
+  border-left: 3px solid rgb(202, 81, 0);
+}
+input:focus{
+  outline: none;
+}
+form button{
+  width: 70%;
+  color: white;
+  font-weight: 600;
+  background-color: rgb(0, 119, 255);
+  transform: translateY(25%);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.171);
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+form button:hover{
+  transform: translateY(15%);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+form p{
+  width: 70%;
+  margin-top: 4em;
+}
+form p span{
+  font-weight: 700;
+  color: blue;
+  cursor: pointer;
+}
+form div svg{
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 1em;
+  cursor: pointer ;
+}
+form div svg.password{
+  fill: grey;
+}
+form div svg.text{
+  fill: blue;
+}
+input[type='password'] {
+  font-family: Verdana;
+}
+.Client.checked-client, .DeliveryMan.checked-delivery{
+  background-color: #00CA7D !important;
+  color: white !important;
+}
+::-webkit-scrollbar{
+  display: none;
+}

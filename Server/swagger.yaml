@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: Allo Media
+  version: 1.0.0
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      description: Register a new user with the provided details.
+      tags:
+        - Authentication
+      requestBody:
+        description: User registration details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+                full_name:
+                  type: string
+                phone_number:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - "Client"
+                    - "DeliveryMan"
+                required:
+                  - email
+                  - password
+                  - full_name
+                  - role
+                  - phone_number
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Registration successful message
+                  user:
+                    type: object
+                    description: User object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                      full_name:
+                        type: string
+                      phone_number:
+                        type: string
+                      address:
+                        type: string
+                      role:
+                        type: string
+                        enum:
+                          - "Client"
+                          - "DeliveryMan"
+
+        '400':
+          description: Bad request (Example : missing a required property)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+
+        '409':
+          description: Conflict (Email Or Phone Number Token Already)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: User already exists
+
+        '401':
+          description: Unauthorized (Example can not register while logging in)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Unauthorized Action 
+  /api/auth/login:
+    post:
+      summary: Log in a user
+      description: Log in a user with the provided credentials.
+      tags:
+        - Authentication
+      requestBody:
+        description: User login details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                required:
+                  - email
+                  - password
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Login successful message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Unauthorized Action
+        '400':
+          description: Bad request (Example: missing a required property)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+  /api/auth/sendVerification:
+    post:
+      summary: Send email verification
+      description: Send an email verification message to the user's email address.
+      tags:
+        - Authentication
+      requestBody:
+        description: User email address
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  required: true
+      responses:
+        '200':
+          description: Email verification sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Email verification sent successfully
+        '400':
+          description: Bad request (Example: missing a required property or invalid email format)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+        '404':
+          description: Not Found (No user with the specified email)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: No user found with this email
+
+  /api/auth/me:
+    get:
+      summary: Get user information
+      description: Retrieve user information for the authenticated user.
+      tags:
+        - User
+      security:
+        - AccessToken: []
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized (Invalid access or refresh tokens)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Unauthorized Action
+  /api/auth/logout:
+    post:
+      summary: User logout
+      description: Log out the authenticated user by clearing access and refresh tokens.
+      tags:
+        - Authentication
+      security:
+        - AccessToken: []
+      responses:
+        '200':
+          description: User logged out successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: User logged out successfully
+        '401':
+          description: Unauthorized (Invalid access or refresh tokens)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Unauthorized Action
+  /api/auth/forgetPassword:
+    post:
+      summary: Initiate password reset
+      description: Initiate the password reset process by sending a verification email to the user's email address.
+      tags:
+        - Authentication
+      requestBody:
+        description: User's email address
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+        responses:
+          '200':
+            description: Email sent successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Email sent successfully
+          '400':
+            description: Bad request (Example: Missing or incorrect email format)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Error message
+          '401':
+            description: Unauthorized (Example: Email is not correct)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Error message
+  /verifyEmail:
+    post:
+      summary: Verify user's email
+      description: Verify a user's email using a verification token.
+      tags:
+        - Authentication
+      requestBody:
+        description: Verification token in query parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+        responses:
+          '200':
+            description: User has been verified
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: User has been verified
+          '403':
+            description: Action denied (Example: No token or invalid token)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Error message
+          '404':
+            description: User not found (Example: Invalid token or no user associated with it)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Error message
+  /resetPassword:
+    post:
+      summary: Reset user's password
+      description: Reset a user's password using a reset token.
+      tags:
+        - Authentication
+      requestBody:
+        description: User's new password and confirmation
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+        responses:
+          '201':
+            description: Password updated successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Password updated successfully
+          '400':
+            description: Bad request (Example: Missing required fields or password mismatch)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Error message
+          '403':
+            description: Action denied (Example: No token or invalid token)
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Error message                   
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address
+        full_name:
+          type: string
+          description: User's full name
+        phone_number:
+          type: string
+          description: User's phone number
+        address:
+          type: string
+          description: User's address
+        role:
+          type: string
+          enum:
+            - "Client"
+            - "DeliveryMan"
+          description: User's role (Client or DeliveryMan)
+        verified:
+          type: boolean
+          description: User's verification status
+        approved:
+          type: boolean
+          description: User's approval status
+  securitySchemes:
+      AccessToken:
+        type: apiKey
+        in: cookie
+        name: accessToken
