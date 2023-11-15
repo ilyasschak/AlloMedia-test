@@ -6,10 +6,18 @@ async function insertRoles() {
         { name: 'DeliveryMan' },
         { name: 'Client' },
     ];
-
     try {
-        await Role.insertMany(rolesToInsert);
+        const roles = [];
+        for (const role of rolesToInsert) {
+          const newRole = await Role.findOneAndUpdate(
+            { name: role.name },
+            role,
+            { upsert: true, new: true }
+          );
+          roles.push(newRole);
+        }
         console.log('Roles inserted successfully');
+        return roles;
     } catch (error) {
         console.error('Error inserting roles:', error);
     }
