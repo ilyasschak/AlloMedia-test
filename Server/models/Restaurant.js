@@ -11,7 +11,7 @@ const restaurantSchema = new mongoose.Schema({
       required: true,
     },
     emplacement: {
-      type: String,
+      type: Array,
       required: true,
     },
     owner: {

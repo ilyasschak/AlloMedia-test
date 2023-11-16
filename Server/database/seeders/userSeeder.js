@@ -11,7 +11,7 @@ async function insertUsers(roles) {
       const email = faker.internet.email();
       const password = faker.internet.password();
       const phone_number = faker.phone.number();
-      const address = faker.address.streetAddress();
+      const address = faker.location.streetAddress();
       let user = new User({
         full_name,
         email,

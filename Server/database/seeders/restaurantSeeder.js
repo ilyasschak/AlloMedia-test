@@ -5,7 +5,12 @@ async function insertRestaurant(users,types) {
   const restaurantToInsert = [];
   for (let i = 1; i <= 10; i++) {
     const nom = faker.company.name();
-    const emplacement = faker.address.street();
+
+    const latitude = parseFloat(faker.location.latitude());
+    const longitude = parseFloat(faker.location.longitude());
+    const emplacement = [latitude, longitude];
+    
+    // const emplacement = faker.address.street();
     restaurantToInsert.push({
       nom,
       emplacement,
