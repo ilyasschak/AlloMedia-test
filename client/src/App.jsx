@@ -19,6 +19,7 @@ import VerifyEmail from "./views/pages/VerifyEmail";
 import ResetPassword from "./views/pages/ResetPassword";
 import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
+import Menu from "./components/menu/menu";
 
 function App() {
   const {user} = useUser();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/resetPassword" element={<ResetPassword/>}/>
         <Route path="/forgetPassword" element={<ForgetPassword/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
+        <Route path="/menu" element={<Menu/>}/>
       </Route>
     )
   );

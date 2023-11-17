@@ -47,6 +47,11 @@ const Navbar = () => {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border items-center  rounded-xl bg-white md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             
+            <NavLink to="">
+                <button className=" md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
+                    panie
+                </button> 
+            </NavLink>
             {!user._id && <NavLink to="login">
                 <button className=" md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     Login
@@ -63,6 +68,7 @@ const Navbar = () => {
                     Profile
                 </button>
             </NavLink>}
+          
             {user._id && <button className=" rounded-md text-brand px-3 py-2 mx-1 bg-white" onClick={handleLogout}>logout</button>}
           </ul>
         </div>
