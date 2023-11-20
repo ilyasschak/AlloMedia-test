@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Navigate,
+  Routes,
 } from "react-router-dom";
 
 import './App.css'
@@ -25,6 +26,7 @@ function App() {
   const {user} = useUser();
   const router = createBrowserRouter(
     createRoutesFromElements(
+      <Route path="/">
       <Route path="/" element={<RootLayout/>}>
         <Route path="/" element={<LandingPage/>} />
         <Route path="/login" element={!user._id ? <Login/> : <Navigate to={'/me'}/>} />
@@ -37,6 +39,8 @@ function App() {
         <Route path="/forgetPassword" element={<ForgetPassword/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
+      </Route>
+      <Route path="/menu" element={<Menu/>}/>
       </Route>
     )
   );

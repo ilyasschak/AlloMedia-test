@@ -1,59 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Card } from 'flowbite-react';
-
-const MenuItem = ({ title, description }) => (
-  <Card className="max-w-sm">
-    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
-    <p className="font-normal text-gray-700 dark:text-gray-400">{description}</p>
-    <Button>
-      Add To Cart 
-      <svg className="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fillRule="evenodd"
-          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </Button>
-  </Card>
-);
+import  { useEffect, useState } from 'react';
 
 const Menu = () => {
-  const [menuData, setMenuData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [menus, setMenus] = useState([]);
 
   useEffect(() => {
-    const fetchMenu = async () => {
-        try {
-          const response = await fetch("http://localhost:3000/api/menu");
-          const data = await response.json();
-          console.log(data);  
-          const menuArray = Array.isArray(data) ? data : [data];
-      
-          setMenuData(menuArray);
-        } catch (error) {
-          console.error("Error fetching menu data:", error.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+    const fetchMenus = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/menu');
+        const data = await response.json();
+        console.log(data);
+        setMenus(data);
+      } catch (error) {
+        console.error('Error fetching menus:', error);
+      }
+    };
 
-    fetchMenu();
-  }, []);
+    fetchMenus();
+  }, []); 
 
   return (
-    <div className='flex gap-5 flex-wrap p-12'>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        menuData.map((menuItem) => (
-            <MenuItem
-              key={menuItem.id}
-              title={menuItem.nom || 'Default Title'}
-              description={(menuItem.restaurant && menuItem.restaurant.nom) || 'Default Description'}
-            />
-          ))
-      )}
+    <div className='flex flex-wrap gap-3 justify-between w-full p-12'>
+      {menus.map((menu) => (
+        <div
+          key={menu._id}
+          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {menu.nom}
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            {menu.restaurant.nom}
+          </p>
+          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-2 hover:bg-blue-700">
+            Add to Cart
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
