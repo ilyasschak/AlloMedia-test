@@ -15,8 +15,8 @@ const Order = () => {
          
               <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
                 <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-                  <span class="mr-3 font-semibold text-dark">Projects Deliveries</span>
-                  <span class="mt-1 font-medium text-secondary-dark text-lg/normal">All projects from the Loopple team</span>
+                  <span class="mr-3 font-semibold text-dark">Orders</span>
+                  <span class="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders from our clients</span>
                 </h3>
                 {/* <div class="relative flex flex-wrap items-center my-2">
                   <a href="javascript:void(0)" class="inline-block text-[.925rem] font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-150 ease-in-out text-light-inverse bg-light-dark border-light shadow-none border-0 py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light"> See other projects </a>
@@ -28,12 +28,12 @@ const Order = () => {
                   <table class="w-full my-0 align-middle text-dark border-neutral-200">
                     <thead class="align-bottom">
                       <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-                        <th class="pb-3 text-start min-w-[175px]">TASK</th>
+                        <th class="pb-3 text-start min-w-[175px]">Orders</th>
                         <th class="pb-3 text-end min-w-[100px]">OWNER</th>
                         <th class="pb-3 text-end min-w-[100px]">PROGRESS</th>
                         <th class="pb-3 pr-12 text-end min-w-[175px]">STATUS</th>
-                        <th class="pb-3 pr-12 text-end min-w-[100px]">DEADLINE</th>
-                        <th class="pb-3 text-end min-w-[50px]">DETAILS</th>
+                        <th class="pb-3 pr-12 text-end min-w-[100px]">Date</th>
+                        <th class="pb-3 text-end min-w-[50px]">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
