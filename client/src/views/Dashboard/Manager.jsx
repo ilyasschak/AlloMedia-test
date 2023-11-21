@@ -4,6 +4,7 @@ import Sidebar from '../common/Sidebar'
 import axios from 'axios';
 import '../../assets/styles/manager.css'
 import { useUser } from "../../contexts/userContext";
+import Order from './Order'
 
 
 const socket = io.connect("http://localhost:3000");
@@ -107,9 +108,9 @@ const Manager = () => {
                         </span>
                     </div>
                     </div>
-                    <a href="http://">
+                    <a href="/dashboard/orders">
                     <div class="h-50 ml-4 flex w-auto flex-col justify-center">
-                    <p class="font-dm text-sm font-medium text-gray-600">Commands</p>
+                    <p class="font-dm text-sm font-medium text-gray-600">Orders</p>
                     <h4 class="text-xl font-bold text-navy-700 dark:text-white">15</h4>
                     </div>
 
