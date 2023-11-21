@@ -21,6 +21,7 @@ import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
+import Order from "./views/Dashboard/Order";
 
 function App() {
   const {user} = useUser();
@@ -39,6 +40,7 @@ function App() {
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>
         <Route path="/Dashboard/manager" element={<Manager/>}/>
+        <Route path="/Dashboard/orders" element={<Order/>}/>
       </Route>
     )
   );
