@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/userContext"
 
+// import './index.css'
+
 const Profile = () => {
     const {user , sendVerification,getUser} = useUser();
     const [verificationSent, setVerificationSent] = useState(false);
