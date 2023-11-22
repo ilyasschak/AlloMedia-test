@@ -3,14 +3,40 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendEMail } = require("../utils/emailSender");
 const { emailVerificationMessage } = require("../utils/messagesGenerator");
+const Command = require("../models/Command");
 
 class AuthController {
   static async me(req, res) {
     let email = req.user.email;
-    const user = await User.findOne({ email }).populate({
-      path: "role",
-      select: "name",
-    });
+    const user = await User.findOne({ email })
+      .select("-password")
+      .populate({
+        path: "role",
+        select: "name",
+      })
+      .exec();
+
+    if (user.role.name === "Client") {
+      const commands = await Command.find({ client: user._id });
+
+      // const populatedCommands = await Command.populate(commands, [
+      //   { path: "client", select: "-password" },
+      //   { path: "articles._id" },
+      // ]);
+
+      const populatedCommands = await Command.populate(commands, [
+        { path: "client", select: "-password" },
+        { path: "articles._id", populate: { path: "_id", model: "Article" } },
+      ]);
+
+      console.log(user.role.name);
+      console.log(populatedCommands);
+      return res.status(200).json({
+        user: user,
+        commands: populatedCommands,
+      });
+    }
+
     return res.status(200).json({ user });
   }
 
