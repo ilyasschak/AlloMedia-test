@@ -9,7 +9,7 @@ const RootLayout = () => {
       getUser();
     },[])
   return (
-    <main className="landing-page  bg-brand-80 h-full w-full flex flex-col overflow-scroll">
+    <main className="landing-page  h-full w-full flex flex-col overflow-scroll">
       <Navbar />
       <Outlet />
     </main>

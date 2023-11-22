@@ -7,7 +7,7 @@ const commandSchema = new mongoose.Schema({
       required: true,
     },
     articles: [{
-      id: {
+      _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Article',
         required: true,
