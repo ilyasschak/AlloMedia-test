@@ -1,7 +1,5 @@
 import { createContext, useState, useContext } from "react";
 import api from "../api";
-import { data } from "autoprefixer";
-import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -29,7 +27,7 @@ export function UserProvider({ children }) {
     try {
       response = await api.get("/auth/me");
       if (response.data.user) {
-        console.log("hii");
+        console.log(response.data);
         setUser(response.data.user);
       } else {
         setUser({});

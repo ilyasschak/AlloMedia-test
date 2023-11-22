@@ -7,10 +7,9 @@ import {
   Routes,
 } from "react-router-dom";
 
-import './App.css'
+import "./App.css";
 import LandingPage from "./views/pages/LandingPage";
 import RootLayout from "./views/RootLayout";
-import LiveCoding from "./views/LiveCoding";
 import Login from "./views/signPages/Login";
 import SignUp from "./views/signPages/SignUp";
 import RegisterSuccess from "./views/pages/RegisterSuccess";
@@ -28,9 +27,10 @@ import Menu from "./components/menu/menu";
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
 import Order from "./views/Dashboard/Order";
+import ClientOrders from "./views/pages/ClientOrders";
 
 function App() {
-  const {user} = useUser();
+  const { user } = useUser();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/">
@@ -41,6 +41,7 @@ function App() {
         <Route path="/registerSuccess" element={<RegisterSuccess/>}/>
         <Route path="/me" element={user._id ? <Profile/> : <Navigate to={'/login'}/>}/>
         <Route path="/verifyEmail" element={<VerifyEmail/>}/>
+        <Route path="/orders" element={<ClientOrders />} />
         <Route path="/verified" element={<EmailVerified/>}/>
         <Route path="/resetPassword" element={<ResetPassword/>}/>
         <Route path="/forgetPassword" element={<ForgetPassword/>}/>
@@ -55,6 +56,7 @@ function App() {
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>
         <Route path="/Dashboard/manager" element={<Manager/>}/>
         <Route path="/Dashboard/orders" element={<Order/>}/>
+
       </Route>
     )
   );

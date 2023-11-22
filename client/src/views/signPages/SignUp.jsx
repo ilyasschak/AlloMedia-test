@@ -61,8 +61,8 @@ const SignUp = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 max-w-screen-xl justify-center items-center">
-      <h3 className="text-white font-bold text-3xl">Sign Up</h3>
-        <form onSubmit={formik.handleSubmit} action="" className="bg-white W-full p-16 rounded-2xl flex flex-col gap-6">
+      <h1 className="text-brand font-bold text-5xl">Register</h1>
+        <form onSubmit={formik.handleSubmit} action="" className="bg-white p-16 rounded-2xl flex flex-col gap-6">
         {message && (
           <div className=" text-red-700 bg-red-200 p-2 border border-red text-center text-bold  w-full leading-3">
             {message}
