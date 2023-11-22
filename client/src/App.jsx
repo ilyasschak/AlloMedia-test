@@ -22,6 +22,10 @@ import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
 import Menu from "./components/menu/menu";
 
+import Livreur from "./views/Dashboard/Livreur";
+import Manager from "./views/Dashboard/Manager";
+import Order from "./views/Dashboard/Order";
+
 function App() {
   const {user} = useUser();
   const router = createBrowserRouter(
@@ -41,6 +45,10 @@ function App() {
         <Route path="/menu" element={<Menu/>}/>
       </Route>
       <Route path="/menu" element={<Menu/>}/>
+
+        <Route path="/Dashboard/livreur" element={<Livreur/>}/>
+        <Route path="/Dashboard/manager" element={<Manager/>}/>
+        <Route path="/Dashboard/orders" element={<Order/>}/>
       </Route>
     )
   );
