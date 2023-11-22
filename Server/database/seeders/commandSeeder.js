@@ -11,11 +11,11 @@ async function insertCommands(users, articles) {
       livreur: users[Math.floor(Math.random() * users.length)]._id,
       articles: [
         {
-          id: articles[Math.floor(Math.random() * articles.length)]._id,
+          _id: articles[Math.floor(Math.random() * articles.length)]._id,
           quantite: Math.floor(Math.random() * 10) + 1,
         },
         {
-          id: articles[Math.floor(Math.random() * articles.length)]._id,
+          _id: articles[Math.floor(Math.random() * articles.length)]._id,
           quantite: Math.floor(Math.random() * 10) + 1,
         },
       ],

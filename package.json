@@ -1,9 +1,10 @@
 {
     "scripts": {
-      "install-all": "cd Server && npm install && cd ../client && npm install",
-      "start-all": "concurrently \"npm --prefix ./Server run dev\" \"npm --prefix ./client run dev\""
+        "install-all": "cd Server && npm install && cd ../client && npm install",
+        "start-all": "concurrently \"npm --prefix ./Server run dev\" \"npm --prefix ./client run dev\""
     },
     "dependencies": {
-      "concurrently": "^8.2.2"
+        "concurrently": "^8.2.2",
+        "flowbite-react": "^0.6.4"
     }
 }

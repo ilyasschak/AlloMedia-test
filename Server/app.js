@@ -40,12 +40,6 @@ io.on("connection", socketHandler)
 require('dotenv').config()
 require('./config/dbConfig')();
 
-
-
-
-
-
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -53,10 +47,14 @@ app.use(express.urlencoded({extended:false}));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use('/api', require('./routes/restaurantRoutes'))
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/user/client', require('./routes/ClientRoutes'));
 app.use('/api/user/DeliveryMan', require('./routes/DeliveryManRoutes'));
 app.use('/api/user/Manager', require('./routes/ManagerRoutes'));
+app.use('/api/menu', require('./routes/MenuRoutes'));
+app.use('/api/panier', require('./routes/PanierRoutes'));
+
 app.use('/api/orders', require('./routes/OrderRoutes'));
 
 
