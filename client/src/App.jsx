@@ -20,6 +20,9 @@ import VerifyEmail from "./views/pages/VerifyEmail";
 import ResetPassword from "./views/pages/ResetPassword";
 import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
+import SearchRestaurant from "./views/pages/SearchRestaurant.jsx";
+import RestaurantsMap from "./views/pages/RestaurantsMap.jsx";
+import PopupsController from "./views/common/PopupsController.jsx";
 import Menu from "./components/menu/menu";
 
 import Livreur from "./views/Dashboard/Livreur";
@@ -41,6 +44,9 @@ function App() {
         <Route path="/verified" element={<EmailVerified/>}/>
         <Route path="/resetPassword" element={<ResetPassword/>}/>
         <Route path="/forgetPassword" element={<ForgetPassword/>}/>
+        <Route path="/search" element={<SearchRestaurant/>}/>
+        <Route path="/map" element={<RestaurantsMap/>}/>
+        <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
       </Route>
