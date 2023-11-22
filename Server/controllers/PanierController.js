@@ -28,7 +28,7 @@ const addToPanier = async (req, res) => {
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-        userPanier.articles.push({ menu: menuId, quantite: quantity, id: new ObjectId() });
+      userPanier.articles.push({ menu: menuId, quantite: quantity, id: new ObjectId() });
     }
 
     await userPanier.save();
@@ -41,4 +41,22 @@ const addToPanier = async (req, res) => {
   }
 };
 
-module.exports = { addToPanier };
+const getPanier = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        console.log(userId);
+        const userPanier = await Panier.findOne({ user: userId });
+    
+        if (!userPanier) {
+          return res.status(404).json({ error: 'Panier not found for this user' });
+        }
+    
+        res.json(userPanier);
+        console.log(userPanier);
+      } catch (error) {
+        console.error('Error getting Panier:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+};
+
+module.exports = { addToPanier, getPanier };

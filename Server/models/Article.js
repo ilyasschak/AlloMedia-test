@@ -5,6 +5,13 @@ const articleSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    prix : {
+      type : Number,
+      required : true,
+    },
+    description : {
+      type : String
+    },
     menu: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Menu',

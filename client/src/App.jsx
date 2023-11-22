@@ -21,6 +21,7 @@ import ResetPassword from "./views/pages/ResetPassword";
 import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
 import Menu from "./components/menu/menu";
+import Cart from "./components/panier/panier";
 
 function App() {
   const {user} = useUser();
@@ -41,6 +42,7 @@ function App() {
         <Route path="/menu" element={<Menu/>}/>
       </Route>
       <Route path="/menu" element={<Menu/>}/>
+      <Route path="/cart" element={<Cart/>}/>
       </Route>
     )
   );

@@ -27,6 +27,7 @@ app.use('/api/user/DeliveryMan', require('./routes/DeliveryManRoutes'));
 app.use('/api/user/Manager', require('./routes/ManagerRoutes'));
 app.use('/api/menu', require('./routes/MenuRoutes'));
 app.use('/api/panier', require('./routes/PanierRoutes'));
+app.use('/api/panier', require('./routes/PanierRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT,()=>{
