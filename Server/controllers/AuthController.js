@@ -27,7 +27,7 @@ class AuthController {
     }
 
     const user = await User.findOne({ email });
-
+    
     if (!user) {
       return res.status(401).json({ message: "Email is not correct" });
     }

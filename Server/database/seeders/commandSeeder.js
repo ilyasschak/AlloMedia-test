@@ -23,7 +23,8 @@ async function insertCommands(users, articles) {
     });
   }
   try {
-    const commands = await Command.insertMany(commandsToInsert);
+    // const commands = await Command.insertMany(commandsToInsert);
+    const commands = await Command.create(commandsToInsert);
     console.log("commands inserted successfully");
     return commands;
   } catch (error) {
