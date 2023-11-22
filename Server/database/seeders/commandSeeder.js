@@ -11,11 +11,11 @@ async function insertCommands(users, articles) {
       livreur: users[Math.floor(Math.random() * users.length)]._id,
       articles: [
         {
-          id: articles[Math.floor(Math.random() * articles.length)]._id,
+          _id: articles[Math.floor(Math.random() * articles.length)]._id,
           quantite: Math.floor(Math.random() * 10) + 1,
         },
         {
-          id: articles[Math.floor(Math.random() * articles.length)]._id,
+          _id: articles[Math.floor(Math.random() * articles.length)]._id,
           quantite: Math.floor(Math.random() * 10) + 1,
         },
       ],
@@ -23,8 +23,7 @@ async function insertCommands(users, articles) {
     });
   }
   try {
-    // const commands = await Command.insertMany(commandsToInsert);
-    const commands = await Command.create(commandsToInsert);
+    const commands = await Command.insertMany(commandsToInsert);
     console.log("commands inserted successfully");
     return commands;
   } catch (error) {
