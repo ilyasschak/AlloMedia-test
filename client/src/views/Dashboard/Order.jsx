@@ -1,12 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '../common/Sidebar'
+import { useEffect } from 'react';
 
-const Order = () => {
+import axios from 'axios';
+
+const Order =  () => {
+
+  const arr =[]
+ 
+  const [orders, setOrders]=useState(arr)
+
+ 
+
+  useEffect(()=>{
+
+
+    
+
+    const showOrders= async()=>{
+
+      try{
+  
+        const response = await axios.get('http://localhost:3000/api/orders/show');
+        // console.log(response.data);
+  
+  
+        setOrders(response.data.orders)
+        console.log(response.data.orders);
+        // console.log(orders);
+       
+      
+  
+  
+    
+      }catch(error){
+        console.error(error)
+      }
+  
+    }
+
+    showOrders();
+
+  },[])
+
+
+ 
+
+
+
+
+
   return (
     <div className='flex'>
 
       <Sidebar/>
-
+      {/* <ordersTable orders={}/> */}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/>
       <div class="flex flex-wrap -mx-3 mb-5 w-10/12 justify-center">
         <div class="w-full max-w-full px-3 mb-6  mx-auto">
@@ -23,10 +71,10 @@ const Order = () => {
                 </div> */}
               </div>
            
-              <div class="flex-auto block py-8 pt-6 px-9">
-                <div class="overflow-x-auto">
-                  <table class="w-full my-0 align-middle text-dark border-neutral-200">
-                    <thead class="align-bottom">
+              <div class="flex-auto block py-8 pt-6 px-9 max-h-[80vh] overflow-scroll">
+                <div class="overflow-x-auto max-h-[80%] ">
+                  <table class="w-full my-0 align-middle text-dark border-neutral-200 max-h-[100%] overflow-scroll relative">
+                    <thead class="align-bottom sticky top-0">
                       <tr class="font-semibold text-[0.95rem] text-secondary-dark">
                         <th class="pb-3 text-start min-w-[175px]">Orders</th>
                         <th class="pb-3 text-end min-w-[100px]">OWNER</th>
@@ -37,20 +85,29 @@ const Order = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="border-b border-dashed last:border-b-0">
+
+
+                      {orders.map((order)=>(
+
+                   
+
+               
+                    
+
+             <tr class="border-b border-dashed last:border-b-0">
                         <td class="p-3 pl-0">
-                          <div class="flex items-center">
-                        
-                            <div class="relative inline-block shrink-0 rounded-2xl me-3">
+                          <div class="flex items-center flex-row">
+
+                            {/* <div class="relative inline-block shrink-0 rounded-2xl me-3">
                               <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-49-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div>
-                            <div class="flex flex-col justify-start">
-                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> Social Media API </a>
+                            </div> */}
+                            <div class="flex justify-start">
+                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {order.articles.map(article =>(<span>{article._id.Plat}</span>))}</a>
                             </div>
                           </div>
                         </td>
                         <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">Olivia Cambell</span>
+                          <span class="font-semibold text-light-inverse text-md/normal">{order.client.full_name}</span>
                         </td>
                         <td class="p-3 pr-0 text-end">
                           <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
@@ -59,166 +116,29 @@ const Order = () => {
                             </svg> 6.5% </span>
                         </td>
                         <td class="p-3 pr-12 text-end">
-                          <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg"> In Progress </span>
+                          <span className={order.status == "Pending" ? "bg-red-300 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-300 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-300 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-primary bg-primary-light text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span>
                         </td>
                         <td class="pr-0 text-start">
                           <span class="font-semibold text-light-inverse text-md/normal">2023-08-23</span>
                         </td>
-                        <td class="p-3 pr-0 text-end">
-                          <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
-                            <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
+                        <td class="p-3 pr-0 text-end flex">
+                          <button className='bg-success text-white rounded p-1 '>Comfirm</button>
+                          <button className='bg-red-600 text-white rounded p-1 m-1'>Delete</button>
+                          {/* <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center"> */}
+                            {/* <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                               </svg>
-                            </span>
-                          </button>
+                            </span> */}
+                          {/* </button> */}
                         </td>
-                      </tr>
-                      <tr class="border-b border-dashed last:border-b-0">
-                        <td class="p-3 pl-0">
-                          <div class="flex items-center">
-                            <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                              <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-40-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div>
-                            <div class="flex flex-col justify-start">
-                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> Geolocation App </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">Luca Micloe</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-danger bg-danger-light rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.51l-5.511-3.181" />
-                            </svg> 2.7% </span>
-                        </td>
-                        <td class="p-3 pr-12 text-end">
-                          <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-light-inverse bg-light rounded-lg"> Under Review </span>
-                        </td>
-                        <td class="pr-0 text-start">
-                          <span class="font-semibold text-light-inverse text-md/normal">2024-04-11</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
-                            <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                              </svg>
-                            </span>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr class="border-b border-dashed last:border-b-0">
-                        <td class="p-3 pl-0">
-                          <div class="flex items-center">
-                            <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                              <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-39-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div>
-                            <div class="flex flex-col justify-start">
-                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> iOS Login <span class="text-sm">(Morra)</span>
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">Bianca Winson</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                            </svg> 6.8% </span>
-                        </td>
-                        <td class="p-3 pr-12 text-end">
-                          <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg"> In Progress </span>
-                        </td>
-                        <td class="pr-0 text-start">
-                          <span class="font-semibold text-light-inverse text-md/normal">2024-02-10</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
-                            <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                              </svg>
-                            </span>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr class="border-b border-dashed last:border-b-0">
-                        <td class="p-3 pl-0">
-                          <div class="flex items-center">
-                            <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                              <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-47-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div>
-                            <div class="flex flex-col justify-start">
-                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> Axios Menu </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">Roberto Alliton</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                            </svg> 4.5% </span>
-                        </td>
-                        <td class="p-3 pr-12 text-end">
-                          <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-success bg-success-light rounded-lg"> Done </span>
-                        </td>
-                        <td class="pr-0 text-start">
-                          <span class="font-semibold text-light-inverse text-md/normal">2023-05-31</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
-                            <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                              </svg>
-                            </span>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr class="border-b border-dashed last:border-b-0">
-                        <td class="p-3 pl-0">
-                          <div class="flex items-center">
-                            <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                              <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-48-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div>
-                            <div class="flex flex-col justify-start">
-                              <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> Resto Aperto </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">Michael Kenny</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-danger bg-danger-light rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.51l-5.511-3.181" />
-                            </svg> 1% </span>
-                        </td>
-                        <td class="p-3 pr-12 text-end">
-                          <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-warning bg-warning-light rounded-lg"> Postponed </span>
-                        </td>
-                        <td class="pr-0 text-start">
-                          <span class="font-semibold text-light-inverse text-md/normal">2023-05-15</span>
-                        </td>
-                        <td class="p-3 pr-0 text-end">
-                          <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
-                            <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                              </svg>
-                            </span>
-                          </button>
-                        </td>
-                      </tr>
+              </tr>
+
+
+))
+
+}
+
                     </tbody>
                   </table>
                 </div>
@@ -227,11 +147,7 @@ const Order = () => {
           </div>
         </div>
       </div>
-      {/* <div class="flex flex-wrap -mx-3 mb-5">
-        <div class="w-full max-w-full sm:w-3/4 mx-auto text-center">
-          <p class="text-sm text-slate-500 py-1"> Tailwind CSS Component from <a href="https://www.loopple.com/theme/riva-dashboard-tailwind?ref=tailwindcomponents" class="text-slate-700 hover:text-slate-900" target="_blank">Riva Dashboard</a> by <a href="https://www.loopple.com" class="text-slate-700 hover:text-slate-900" target="_blank">Loopple Builder</a>. </p>
-        </div>
-      </div> */}
+   
 
     </div>
 
