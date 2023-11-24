@@ -1,4 +1,5 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
@@ -8,7 +9,6 @@ const Menu = () => {
       try {
         const response = await fetch('http://localhost:3000/api/menu');
         const data = await response.json();
-        console.log(data);
         setMenus(data);
       } catch (error) {
         console.error('Error fetching menus:', error);
@@ -31,9 +31,9 @@ const Menu = () => {
           <p className="font-normal text-gray-700 dark:text-gray-400">
             {menu.restaurant.nom}
           </p>
-          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-2 hover:bg-blue-700">
-            Add to Cart
-          </button>
+          <Link to={`/plats/${menu._id}`} className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-2 hover:bg-blue-700">
+            Voir
+          </Link>
         </div>
       ))}
     </div>

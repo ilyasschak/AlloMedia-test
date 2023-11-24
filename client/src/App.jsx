@@ -25,7 +25,7 @@ import RestaurantsMap from "./views/pages/RestaurantsMap.jsx";
 import PopupsController from "./views/common/PopupsController.jsx";
 import Menu from "./components/menu/menu";
 import Cart from "./components/panier/panier";
-
+import Plats from "./components/articles/plat.jsx"
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
 import Order from "./views/Dashboard/Order";
@@ -50,6 +50,7 @@ function App() {
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
+        <Route path="/plats/:id" element={<Plats/>}/>
       </Route>
       <Route path="/menu" element={<Menu/>}/>
       <Route path="/cart" element={<Cart/>}/>

@@ -1,7 +1,13 @@
 const express = require('express');
 const Menu = require('../models/Menu');
 const Panier = require('../models/Panier');
+const Article = require('../models/Article');
 const { ObjectId } = require('mongoose').Types;
+
+
+
+
+
 
 const addToPanier = async (req, res) => {
   try {
@@ -16,11 +22,12 @@ const addToPanier = async (req, res) => {
       return res.status(404).json({ error: 'Menu not found' });
     }
 
-    const userId = 1;
+    const userId = req.user;
+    console.log(userId);
     let userPanier = await Panier.findOne({ user: userId });
 
     if (!userPanier) {
-      userPanier = new Panier({ user: userId, client: new ObjectId(), articles: [] });
+      userPanier = new Panier({ user: userId, client: userId.id, articles: [] });
     }
 
     const existingItem = userPanier.articles.find((item) => item.menu.toString() === menuId);
@@ -42,21 +49,22 @@ const addToPanier = async (req, res) => {
 };
 
 const getPanier = async (req, res) => {
-    try {
-        const userId = req.user._id;
-        console.log(userId);
-        const userPanier = await Panier.findOne({ user: userId });
-    
-        if (!userPanier) {
-          return res.status(404).json({ error: 'Panier not found for this user' });
-        }
-    
-        res.json(userPanier);
-        console.log(userPanier);
-      } catch (error) {
-        console.error('Error getting Panier:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-      }
+  try {
+    const userId = req.user.id; // Assuming req.user is an object with an id property
+    // console.log(userId);
+
+    const userPanier = await Panier.find({ client: userId }).populate({path:"articles._id",model:"Article", select :"Plat prix description"});
+    console.log(userPanier);
+
+    if (!userPanier) {
+      return res.status(404).json({ error: 'Panier not found for this user' });
+    }
+
+    res.json(userPanier);
+  } catch (error) {
+    console.error('Error getting Panier:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 module.exports = { addToPanier, getPanier };

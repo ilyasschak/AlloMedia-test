@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const panierSchema = new mongoose.Schema({
     articles: [{
-      id: {
+      _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Article',
         required: true,
