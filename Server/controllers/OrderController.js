@@ -17,35 +17,6 @@ class OrderController {
                         }).populate('client')
 
 
-        // if (orders.length > 0) {
-        //     const order = orders[0];  // Supposons que vous traitez seulement le premier ordre pour cet exemple
-        
-        //     res.json({
-        //         success: true,
-        //         client: orders.client.full_name,
-        //         orders: order.articles.map(article => article._id.Plat),
-        //     });
-        // } else {
-        //     res.json({
-        //         success: true,
-        //         client: null,
-        //         orders: [],
-        //     });
-        // }
-
-    
-;
-
-
-
-       orders.map((order)=>(
-
-       
-
-             
-             console.log(order.articles)
-        ))
-
 
 
 
@@ -56,6 +27,17 @@ class OrderController {
            
 
         })
+
+    }
+
+
+
+    static async comfirmOrder(req,res){
+        const {id}=req.query 
+
+
+        res.json({ success: true, message: 'You Order has been comfirmed for'+id });
+
 
     }
 }

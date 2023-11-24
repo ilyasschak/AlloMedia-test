@@ -4,12 +4,24 @@ import { useEffect } from 'react';
 
 import axios from 'axios';
 
+import { io } from 'socket.io-client';
+import api from '../../api';
+import { useRouteLoaderData } from 'react-router-dom';
+
+const socket = io.connect("http://localhost:3000");
+
 const Order =  () => {
 
   const arr =[]
  
   const [orders, setOrders]=useState(arr)
 
+  const [status, changeStatus]=useState({})
+
+
+  const handleInputChange = (e) => {
+    changeStatus({id: e.target.name});
+};
  
 
   useEffect(()=>{
@@ -44,6 +56,30 @@ const Order =  () => {
   },[])
 
 
+  const ComfirmOrder =async (id) => {
+
+    // e.preventDefault();
+
+        try{
+
+            const url = `/orders/comfirm?id=${id}`
+          const response = await api.get(url);
+
+            console.log(response.data.message);
+
+
+            
+        // Emit the WebSocket event using the existing socket connection
+        socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
+
+
+        }catch(err){
+            console.error(err);
+        }
+  };
+
+
+
  
 
 
@@ -66,9 +102,7 @@ const Order =  () => {
                   <span class="mr-3 font-semibold text-dark">Orders</span>
                   <span class="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders from our clients</span>
                 </h3>
-                {/* <div class="relative flex flex-wrap items-center my-2">
-                  <a href="javascript:void(0)" class="inline-block text-[.925rem] font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-150 ease-in-out text-light-inverse bg-light-dark border-light shadow-none border-0 py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light"> See other projects </a>
-                </div> */}
+              
               </div>
            
               <div class="flex-auto block py-8 pt-6 px-9 max-h-[80vh] overflow-scroll">
@@ -98,9 +132,6 @@ const Order =  () => {
                         <td class="p-3 pl-0">
                           <div class="flex items-center flex-row">
 
-                            {/* <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                              <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-49-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt=""/>
-                            </div> */}
                             <div class="flex justify-start">
                               <a href="javascript:void(0)" class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {order.articles.map(article =>(<span>{article._id.Plat}</span>))}</a>
                             </div>
@@ -122,15 +153,9 @@ const Order =  () => {
                           <span class="font-semibold text-light-inverse text-md/normal">2023-08-23</span>
                         </td>
                         <td class="p-3 pr-0 text-end flex">
-                          <button className='bg-success text-white rounded p-1 '>Comfirm</button>
+                          <button  className='bg-success text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button>
                           <button className='bg-red-600 text-white rounded p-1 m-1'>Delete</button>
-                          {/* <button class="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center"> */}
-                            {/* <span class="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                              </svg>
-                            </span> */}
-                          {/* </button> */}
+                        
                         </td>
               </tr>
 

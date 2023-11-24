@@ -21,28 +21,28 @@ const Manager = () => {
 
 
   
-  const ComfirmOrder =async (e) => {
+//   const ComfirmOrder =async (e) => {
 
-    e.preventDefault();
+//     e.preventDefault();
 
-        try{
+//         try{
 
              
             
-            const response = await axios.get('http://localhost:3000/api/user/Manager/comfirmOrder');
+//             const response = await axios.get('http://localhost:3000/api/orders/comfirm');
 
-            console.log(response.data.message);
+//             console.log(response.data.message);
 
 
             
-        // Emit the WebSocket event using the existing socket connection
-        socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
+//         // Emit the WebSocket event using the existing socket connection
+//         socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
 
 
-        }catch(err){
-            console.error(err);
-        }
-  };
+//         }catch(err){
+//             console.error(err);
+//         }
+//   };
 
 
 
