@@ -33,8 +33,13 @@ class OrderController {
 
 
     static async comfirmOrder(req,res){
+
         const {id}=req.query 
 
+
+        const updateStatus = await Order.updateOne({_id:id},{$set : {status : "Confirmed"}});
+
+        console.log(updateStatus);
 
         res.json({ success: true, message: 'You Order has been comfirmed for'+id });
 

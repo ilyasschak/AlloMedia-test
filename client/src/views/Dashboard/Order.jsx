@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import Sidebar from '../common/Sidebar'
 import { useEffect } from 'react';
-
 import axios from 'axios';
-
 import { io } from 'socket.io-client';
 import api from '../../api';
-import { useRouteLoaderData } from 'react-router-dom';
 
 const socket = io.connect("http://localhost:3000");
 
@@ -16,12 +13,12 @@ const Order =  () => {
  
   const [orders, setOrders]=useState(arr)
 
-  const [status, changeStatus]=useState({})
+  // const [status, changeStatus]=useState({})
 
 
-  const handleInputChange = (e) => {
-    changeStatus({id: e.target.name});
-};
+//   const handleInputChange = (e) => {
+//     changeStatus({id: e.target.name});
+// };
  
 
   useEffect(()=>{
@@ -58,11 +55,11 @@ const Order =  () => {
 
   const ComfirmOrder =async (id) => {
 
-    // e.preventDefault();
+
 
         try{
 
-            const url = `/orders/comfirm?id=${id}`
+          const url = `/orders/comfirm?id=${id}`
           const response = await api.get(url);
 
             console.log(response.data.message);
@@ -147,7 +144,7 @@ const Order =  () => {
                             </svg> 6.5% </span>
                         </td>
                         <td class="p-3 pr-12 text-end">
-                          <span className={order.status == "Pending" ? "bg-red-300 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-300 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-300 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-primary bg-primary-light text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span>
+                          <span className={order.status == "Pending" ? "bg-red-200 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-200 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-100 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-primary bg-primary-light text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span>
                         </td>
                         <td class="pr-0 text-start">
                           <span class="font-semibold text-light-inverse text-md/normal">2023-08-23</span>
