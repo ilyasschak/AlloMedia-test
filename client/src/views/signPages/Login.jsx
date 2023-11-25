@@ -46,12 +46,13 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 max-w-screen-xl justify-center items-center">
-      <h3 className="text-orange-600 font-bold text-4xl">Login</h3>
+      
       <form
         onSubmit={formik.handleSubmit}
         action=""
-        className="bg-white W-full p-16 rounded-2xl flex flex-col gap-6"
+        className=" W-full p-16 rounded-2xl flex flex-col gap-6  bg-orange-600 bg-opacity-20"
       >
+        <h3 className="text-white font-bold text-4xl">Login</h3>
         {message && (
           <div className=" text-red-700 bg-red-200 p-2 border border-red text-center text-bold  w-full leading-3">
             {message}
@@ -73,7 +74,7 @@ const Login = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           name="email"
-          className={formik.errors.email ? "invalid bg-red-300" : ""}
+          className={formik.errors.email ? "invalid bg-red-300" : "border-2 border-orange-600"}
           placeholder="Email"
         />
         {formik.errors.password && (
@@ -87,14 +88,14 @@ const Login = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           name="password"
-          className={formik.errors.password ? "invalid bg-red-300" : ""}
+          className={formik.errors.password ? "invalid bg-red-300" : "border-2 border-orange-600"}
           placeholder="Password"
         />
         
-        <button type="submit" className="w-full text-white bg-orange-600">
+        <button type="submit" className="w-full text-white bg-orange-700">
           Login
         </button>
-        <NavLink to={'/forgetPassword'}><span>Forget Password ?</span></NavLink>
+        <NavLink to={'/forgetPassword'}><span className="text-white font-bold">Forget Password ?</span></NavLink>
       </form>
     </div>
   );
