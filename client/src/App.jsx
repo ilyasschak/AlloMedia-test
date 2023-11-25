@@ -48,13 +48,13 @@ function App() {
         <Route path="/map" element={<RestaurantsMap/>}/>
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
-        <Route path="/menu" element={<Menu/>}/>
-      </Route>
-      <Route path="/menu" element={<Menu/>}/>
-
+        <Route path="/menu" element={<Menu/>}/> 
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>
         <Route path="/Dashboard/manager" element={<Manager/>}/>
         <Route path="/Dashboard/orders" element={<Order/>}/>
+      </Route>
+      <Route path="/menu" element={<Menu/>}/>
+
       </Route>
     )
   );

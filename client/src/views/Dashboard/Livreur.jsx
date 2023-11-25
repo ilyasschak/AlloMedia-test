@@ -16,20 +16,7 @@ const Livreur = () => {
         },[socket])
 
 
-    //   Initialize socket connection outside the component
-//   const socket = io('http://localhost:3000');
 
-//   useEffect(() => {
-//     // Écouter les notifications de nouvelle commande
-//     socket.on('nouvelle-commande', (data) => {
-//       console.log('Nouvelle commande reçue:', data.message);
-//     });
-
-//     // Cleanup the socket connection on component unmount
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, []);
 
 
   return (

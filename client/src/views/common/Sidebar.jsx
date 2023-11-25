@@ -5,7 +5,7 @@ const Sidebar = () => {
 
     const {user, logout,getUser} = useUser();
   return (
-    <div>
+
       <div
 id="view"
 class=" flex flex-row"
@@ -224,7 +224,7 @@ x-data="{ sidenav: true }"
   </div>
 </div>
 
-</div>
+
     </div>
   )
 }

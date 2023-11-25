@@ -131,7 +131,7 @@ input[type='password'] {
   font-family: Verdana;
 }
 .Client.checked-client, .DeliveryMan.checked-delivery{
-  background-color: #00CA7D !important;
+  background-color: brown;
   color: white !important;
 }
 ::-webkit-scrollbar{

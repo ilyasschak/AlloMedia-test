@@ -46,7 +46,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 max-w-screen-xl justify-center items-center">
-      <h3 className="text-white font-bold text-3xl">Login</h3>
+      <h3 className="text-orange-600 font-bold text-4xl">Login</h3>
       <form
         onSubmit={formik.handleSubmit}
         action=""
@@ -91,7 +91,7 @@ const Login = () => {
           placeholder="Password"
         />
         
-        <button type="submit" className="w-full text-white bg-brand">
+        <button type="submit" className="w-full text-white bg-orange-600">
           Login
         </button>
         <NavLink to={'/forgetPassword'}><span>Forget Password ?</span></NavLink>

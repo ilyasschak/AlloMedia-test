@@ -65,9 +65,7 @@ const Order =  () => {
             console.log(response.data.message);
 
 
-            
-        // Emit the WebSocket event using the existing socket connection
-        socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
+            socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
 
 
         }catch(err){

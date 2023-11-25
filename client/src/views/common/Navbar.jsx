@@ -70,12 +70,12 @@ const Navbar = () => {
                 </button> 
             </NavLink>
             {!user._id && <NavLink to="login">
-                <button className=" md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
+                <button className="bg-orange-600 md:text-white text-lg text-brand px-3 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     Login
                 </button> 
             </NavLink>}
             {!user._id && <NavLink to="/register">
-                <button className=" bg-brand text-lg text-white px-6 py-2 rounded-xl w-max-content shadow transform scale-100 hover:scale-110 transition-transform">
+                <button className=" bg-orange-600 text-lg text-white px-3 py-2 rounded-xl w-max-content shadow transform scale-100 hover:scale-110 transition-transform">
                 Sign Up
                 </button> 
             </NavLink>}
