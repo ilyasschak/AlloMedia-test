@@ -5,6 +5,31 @@ const Plat = () => {
   const { id } = useParams();
   const [plat, setPlat] = useState(null);
 
+  const addToCart = async (plat) => {
+    console.log(plat._id);
+    try {
+      const response = await fetch('http://localhost:3000/api/panier/add-to-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          menuId: plat._id,
+          quantity: 1,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Added to cart:', data);
+    } catch (error) {
+      console.error('Error adding to cart:', error.message);
+    }
+  };
+
   useEffect(() => {
     const fetchPlat = async () => {
       try {
@@ -17,8 +42,10 @@ const Plat = () => {
     };
 
     fetchPlat();
+    addToCart();
   }, [id]);
 
+  
   return (
     <div>
       {plat ? (
@@ -53,7 +80,7 @@ const Plat = () => {
                   </div>
                   <div className="flex items-center justify-between">
                       <span className="text-3xl font-bold text-gray-900 dark:text-white">{plat.prix}$</span>
-                      <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                      <a href="#" onClick={() => addToCart(plat)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
                   </div>
               </div>
           </div>

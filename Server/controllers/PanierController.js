@@ -12,28 +12,33 @@ const { ObjectId } = require('mongoose').Types;
 const addToPanier = async (req, res) => {
   try {
     const { menuId, quantity } = req.body;
+    console.log(req.body);
 
     if (!menuId || !quantity) throw new Error("Missing parameters");
 
+    console.log('sucees 1')
+
     const menuObjectId = ObjectId.createFromHexString(menuId);
-    const menu = await Menu.findById(menuObjectId);
+    const menu = await Article.findById(menuObjectId);
 
     if (!menu) {
       return res.status(404).json({ error: 'Menu not found' });
     }
 
-    const userId = req.user;
-    console.log(userId);
-    let userPanier = await Panier.findOne({ user: userId });
+    console.log('suceess 2')
+
+    //const userId = req.user;
+    //console.log(userId);
+    let userPanier = await Panier.findOne({ user: '655e20a7706f51dfae9ac681' });
 
     if (!userPanier) {
-      userPanier = new Panier({ user: userId, client: userId.id, articles: [] });
+      userPanier = new Panier({ user: '655e20a7706f51dfae9ac681', client: '655e20a7706f51dfae9ac681', articles: [] });
     }
 
     const existingItem = userPanier.articles.find((item) => item.menu.toString() === menuId);
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      existingItem.quantite += quantity; // Update the existing quantity
     } else {
       userPanier.articles.push({ menu: menuId, quantite: quantity, id: new ObjectId() });
     }
