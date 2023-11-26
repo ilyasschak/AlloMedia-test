@@ -20,14 +20,15 @@ import VerifyEmail from "./views/pages/VerifyEmail";
 import ResetPassword from "./views/pages/ResetPassword";
 import ForgetPassword from "./views/pages/ForgetPassword";
 import EmailVerified from "./views/pages/EmailVerified";
-import SearchRestaurant from "./views/pages/SearchRestaurant.jsx";
-import RestaurantsMap from "./views/pages/RestaurantsMap.jsx";
+import SearchRestaurant from "./views/pages/restaurant/SearchRestaurant.jsx";
+import RestaurantsMap from "./views/pages/restaurant/RestaurantsMap.jsx";
 import PopupsController from "./views/common/PopupsController.jsx";
 import Menu from "./components/menu/menu";
 
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
 import Order from "./views/Dashboard/Order";
+import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
 
 function App() {
   const {user} = useUser();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/search" element={<SearchRestaurant/>}/>
         <Route path="/map" element={<RestaurantsMap/>}/>
         <Route path="/popup" element={<PopupsController/>}/>
+        <Route path="/restaurants/:restaurant_id" element={<RestaurantPage/>} />
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
       </Route>
