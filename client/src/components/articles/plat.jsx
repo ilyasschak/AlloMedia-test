@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import api from '../../api';
 
 const Plat = () => {
   const { id } = useParams();
@@ -8,23 +9,26 @@ const Plat = () => {
   const addToCart = async (plat) => {
     console.log(plat._id);
     try {
-      const response = await fetch('http://localhost:3000/api/panier/add-to-cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await api.post('http://localhost:3000/api/panier/add-to-cart',
+      //  {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(
+          {
           menuId: plat._id,
           quantity: 1,
-        }),
-      });
+        }
+        // ),}
+        );
   
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
-      const data = await response.json();
-      console.log('Added to cart:', data);
+      // const data = await response.json();
+      console.log('Added to cart:', response);
     } catch (error) {
       console.error('Error adding to cart:', error.message);
     }
