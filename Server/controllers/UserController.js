@@ -16,6 +16,7 @@ class UserController {
             address,
             role 
         } = req.body;
+        console.log(req.body);
 console.log(email, full_name, phone_number, password);
         if(!email , !full_name, !password ,!phone_number, !role,!password_confirmation){
             

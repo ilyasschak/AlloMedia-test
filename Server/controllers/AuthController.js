@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { sendEMail } = require("../utils/emailSender");
 const { emailVerificationMessage } = require("../utils/messagesGenerator");
 const Command = require("../models/Command");
-
+const Article = require("../models/Article");
 class AuthController {
   static async me(req, res) {
     let email = req.user.email;
@@ -13,30 +13,20 @@ class AuthController {
       .populate({
         path: "role",
         select: "name",
-      })
-      .exec();
-
-    if (user.role.name === "Client") {
-      const commands = await Command.find({ client: user._id });
-
-      // const populatedCommands = await Command.populate(commands, [
-      //   { path: "client", select: "-password" },
-      //   { path: "articles._id" },
-      // ]);
-
-      const populatedCommands = await Command.populate(commands, [
-        { path: "client", select: "-password" },
-        { path: "articles._id", populate: { path: "_id", model: "Article" } },
-      ]);
-
-      console.log(user.role.name);
-      console.log(populatedCommands);
-      return res.status(200).json({
-        user: user,
-        commands: populatedCommands,
       });
-    }
-
+      if (user.role.name === "Client") {
+        try{
+          const commands = await Command.find({ client: user._id })
+          .populate({
+            path: "articles._id",
+            model: "Article",
+            select: "Plat prix description",
+          });
+          return res.status(200).json({user,commands})
+        }catch(error){
+          console.log(error);
+        }
+      }
     return res.status(200).json({ user });
   }
 
