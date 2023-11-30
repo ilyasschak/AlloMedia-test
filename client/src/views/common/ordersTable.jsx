@@ -14,10 +14,7 @@ const OrdersTable = ({orders, role}) => {
     })
     return count 
   }
-  const {user , sendVerification,getUser} = useUser();
-
-
-  
+  const {user , sendVerification,getUser} = useUser();  
   const ComfirmOrder =async (id) => {
 
 
@@ -49,9 +46,6 @@ const OrdersTable = ({orders, role}) => {
 };
 
 const comfirmOrderFromDelivery =async (id) => {
-
-
-
   try{
 
     const url = `/orders/comfirmOrderFromDelivery?id=${id}`
@@ -65,11 +59,7 @@ const comfirmOrderFromDelivery =async (id) => {
 
       orderComfirmed.articles.map(article => (
         console.log(article._id.Plat, article._id.prix )
-
-        
       ))
-
-
       socket.emit('recieved notification from delivery', { orderComfirmed });
 
 
@@ -77,6 +67,20 @@ const comfirmOrderFromDelivery =async (id) => {
      console.log(err);
   }
 };
+
+
+const deletOrder = async(id)=>{
+  try{
+
+   const url = `/orders/deleteOrder?id=${id}`;
+   const response = await api.get(url);
+
+   console.log(response);
+
+  }catch(err){
+    console.log(err);
+  }
+}
 
   return (
     
@@ -91,18 +95,18 @@ const comfirmOrderFromDelivery =async (id) => {
               <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
                 <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                   <span className="mr-3 font-semibold text-dark">Orders</span>
-                  {role == "manager" && <span className="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders from our clients</span>}
-                  {role == "client" && <span className="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders i have made</span>}
-                  {role == "DeliveryMan" && <span className="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders you should delivery</span>}
+                  {role == "manager" && <span className="mt-1 font-medium text-neutral-400 text-lg/normal">All Orders from our clients</span>}
+                  {role == "client" && <span className="mt-1 font-medium text-neutral-400 text-lg/normal">All Orders i have made</span>}
+                  {role == "DeliveryMan" && <span className="mt-1 font-medium text-neutral-400 text-lg/normal">All Orders you should delivery</span>}
                 </h3>
            
               </div>
            
-              <div className="flex-auto block py-8 pt-6 px-9 max-h-[80vh] overflow-scroll">
+              <div className="flex-auto block py-8 pt-6 px-9 max-h-[80vh] overflow-scroll ">
                 <div className="overflow-x-auto max-h-[80%]">
                   <table className="w-full my-0 align-middle text-dark border-neutral-200">
                     <thead className="align-bottom">
-                      <tr className="font-semibold text-[0.95rem] text-secondary-dark">
+                      <tr className="font-semibold text-[0.90rem] text-neutral-400">
                         <th className="pb-3 text-start min-w-[175px]">Orders</th>
                         <th className="pb-3 text-end min-w-[100px]">ARTICLES</th>
                         <th className="pb-3 text-end min-w-[100px]">Owner</th>
@@ -115,7 +119,7 @@ const comfirmOrderFromDelivery =async (id) => {
                     </thead>
                     <tbody>
                       {orders.map((order,index) => (
-                      <tr key={index} className="border-b border-dashed last:border-b-0 hover:bg-green-100">
+                      <tr key={index} className="border-b border-dashed last:border-b-0 hover:bg-green-100 text-[0.90rem]">
                         
                         <td className="p-3 pl-0">
                           <div className="flex items-center">
@@ -123,7 +127,7 @@ const comfirmOrderFromDelivery =async (id) => {
                        
                             <div className="flex flex-col justify-start">
                             {order.articles.map((article, index2)=>(
-                                <a key={index2+orders.length} href="#" className="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {article._id.Plat} </a>
+                                <a key={index2+orders.length} href="#" className="mb-1 font-semibold transition-colors duration-200 ease-in-out  text-[0.90rem] text-secondary-inverse hover:text-primary"> {article._id.Plat} </a>
                             ))}
                             </div>
                           </div>
@@ -137,7 +141,7 @@ const comfirmOrderFromDelivery =async (id) => {
                           <span className="font-semibold text-light-inverse text-md/normal">{order.client ? order.client.full_name : "inkonu"}</span>
                         </td>
 
-                        {role== "DeliveryMan" || role== "Manager"&&  <td className="p-3 pr-0 text-end">
+                        {role== "DeliveryMan" || role== "Manager" &&  <td className="p-3 pr-0 text-end">
                           <span className="font-semibold text-light-inverse text-md/normal">{order.client ? order.client.phone_number : "no number"}</span>
                         </td>}
                         <td className="p-3 pr-0 text-end">
@@ -146,7 +150,7 @@ const comfirmOrderFromDelivery =async (id) => {
                             {calculateThePrice(order.articles)}
                         </td>
 
-                      {user.role.name== "Manager" || role== "Client" ?<td className="p-3 pr-0 text-end"> <span className={order.status == "Pending" ? "bg-red-200 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-200 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-100 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-primary bg-primary-light text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span> </td> : "" }
+                      {user.role.name== "Manager" || role== "Client" ?<td className="p-3 pr-0 text-end"> <span className={order.status == "Pending" ? "bg-red-200 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-200 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-100 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-blue-600 bg-blue-100 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span> </td> : "" }
 
                      
                    {user.role.name== "Client" ? 
@@ -168,9 +172,9 @@ const comfirmOrderFromDelivery =async (id) => {
                    }
 
                    {role == "Manager" &&   
-                        <td class="p-3 pr-0 text-end">
+                        <td class="p-3 pr-0 text-end  text-[0.90rem]">
                           {order.status == "Pending" ? <button  className='bg-green-700 text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button> : ""}
-                          <button className='bg-red-600 text-white rounded p-1 m-1'>Delete</button>
+                          <button className='bg-red-600 text-white rounded p-1 m-1' onClick={()=>{deletOrder(order._id)}}>Delete</button>
                         
                         </td>}
                       

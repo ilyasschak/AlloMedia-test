@@ -1,6 +1,7 @@
 
 const Order = require('../models/Command')
 const Article = require('../models/Article')
+const { response } = require('express')
 
 class OrderController {
 
@@ -93,6 +94,14 @@ class OrderController {
 
         res.json({comfirmedOrders :comfirmedOrders })
 
+    }
+
+    static async deleteOrder(req,res){
+        const {id}= req.query
+
+        const deleteOrder =await Order.deleteOne({_id : id})
+
+        res.json({success : deleteOrder})
     }
 
 }
