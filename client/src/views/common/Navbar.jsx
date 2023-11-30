@@ -105,6 +105,16 @@ const Navbar = () => {
               </div>
             </a>
             <a
+              href="#tabs-notification"
+              class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
+              data-te-toggle="pill"
+              data-te-target="#tabs-notification"
+              role="tab"
+              aria-controls="tabs-notification"
+              aria-selected="true"
+              >Commande
+            </a>
+            <a
             onClick={()=>navigate('/cart')}
               href="#tabs-notification"
               class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-3 pb-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"

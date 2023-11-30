@@ -29,6 +29,7 @@ import Plats from "./components/articles/plat.jsx"
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
 import Order from "./views/Dashboard/Order";
+import  Command  from "./components/command/command.jsx";
 
 function App() {
   const {user} = useUser();
@@ -51,6 +52,7 @@ function App() {
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
         <Route path="/plats/:id" element={<Plats/>}/>
+        <Route path="/command" element={<Command/>}/>
         <Route path="/cart" element={<Cart/>}/>
       </Route>
       <Route path="/menu" element={<Menu/>}/>

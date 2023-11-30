@@ -66,7 +66,6 @@ const getPanier = async (req, res) => {
   try {
     const userPanier = await Panier.find({ client: userId })
       .populate({ path: "articles.article", model: "Article", select: "Plat prix description" });
-    console.log(userPanier[0].articles);
     if (userPanier.length === 0) {
       return res.status(404).json({ error: 'Panier not found for this user' });
     }
@@ -118,8 +117,30 @@ const confirmOrder = async (req, res) => {
   }
 };
 
+const getCommands = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Retrieve commands for the user
+    const userCommands = await Command.find({ client: userId })
+      .populate({
+        path: 'articles._id',
+        model: 'Article',
+        select: 'Plat prix description',
+      });
+
+    if (userCommands.length === 0) {
+      return res.status(404).json({ error: 'No commands found for this user' });
+    }
+
+    res.json(userCommands);
+  } catch (error) {
+    console.error('Error getting commands:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
 
 
-module.exports = { addToPanier, getPanier , confirmOrder};
+module.exports = { addToPanier, getPanier , confirmOrder , getCommands};
