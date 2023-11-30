@@ -1,8 +1,10 @@
 import  { useEffect, useState } from 'react';
 import api from "../../api"
+import { useNavigate } from 'react-router-dom';
 const Cart = () => {
   const [userPanier, setUserPanier] = useState([]);
   let total = 0;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPanier = async () => {
@@ -57,10 +59,18 @@ const Cart = () => {
     setUserPanier(updatedPanier);
   };
 
+  const ConfirmOrder = async () => {
+    try {
+      // Make a request to your server to confirm the order
+      const response = await api.post('http://localhost:3000/api/cart/confirmOrder');
+      console.log(response);
+  
+      // Optionally, you can handle the response or navigate the user to a confirmation page
+    } catch (error) {
+      console.error('Error confirming order:', error.message);
+    }
+  };
 
-  
-  
-  
 
   if (!userPanier) {
     return <p>Loading...</p>;
@@ -71,7 +81,7 @@ const Cart = () => {
 
   return (
       <div>
-      <body className="bg-gray-100">
+      <body className="pt-24">
   <div className="container mx-auto mt-10">
     <div className="flex shadow-md my-10">
       <div className="w-3/4 bg-white px-10 py-10">
@@ -88,7 +98,6 @@ const Cart = () => {
         
         {userPanier && userPanier.length > 0 ? (
           userPanier.map((article)=> (
-            
         <div key={article._id} className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
           <div className="flex w-2/5">
             <div className="w-20">
@@ -125,7 +134,7 @@ const Cart = () => {
           ) : (
             <p>Loading...</p>
           )}
-        <a href="#" className="flex font-semibold text-indigo-600 text-sm mt-10">
+        <a onClick={()=>navigate('/menu')} href="#" className="flex font-semibold text-indigo-600 text-sm mt-10">
       
           <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
           Continue Shopping
@@ -138,7 +147,7 @@ const Cart = () => {
             <span>Total cost</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          <button onClick={ConfirmOrder} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Confirmer</button>
         </div>
       </div>
     </div>

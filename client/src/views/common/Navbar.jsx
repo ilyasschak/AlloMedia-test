@@ -1,18 +1,35 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
 import dkjfjkdf from '../../assets/images/logg.png'
+import { useEffect, useState } from "react";
+import api from "../../api";
 
 const Navbar = () => {
   const {user, logout,getUser} = useUser();
+  const [userPanier, setUserPanier] = useState([]);
   const navigate = useNavigate();
   const handleLogout = async()=>{
       let response = await logout();
       if(response.status == 200){
           getUser()
           navigate("/");
-      }
-          
+      }   
   }
+  
+  useEffect(() => {
+    const getPanier = async () => {
+      try {
+        const response = await api.get('http://localhost:3000/api/cart/panier');
+        setUserPanier(response.data)
+        console.log(response);
+      } catch (error) {
+        console.error('Error getting Panier:', error.message);
+      }
+    };
+  
+    getPanier();
+  }, []);
+
   return (
     <nav className="bg-transparent border-gray-200 dark:bg-gray-900 shadow-2xl">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -63,12 +80,6 @@ const Navbar = () => {
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border items-center  rounded-xl bg-white md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            
-            <NavLink to="">
-                <button className=" md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
-                    panie
-                </button> 
-            </NavLink>
             {!user._id && <NavLink to="login">
                 <button className="bg-brand md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     Login
@@ -94,6 +105,7 @@ const Navbar = () => {
               </div>
             </a>
             <a
+            onClick={()=>navigate('/cart')}
               href="#tabs-notification"
               class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-3 pb-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
               data-te-toggle="pill"
@@ -106,7 +118,7 @@ const Navbar = () => {
             </svg>
               <div
                 class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
-                0
+                {userPanier.length}
               </div>
             </a>
             {/* {user._id && <div>{user.full_name}</div>} */}

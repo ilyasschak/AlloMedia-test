@@ -51,9 +51,10 @@ function App() {
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/>
         <Route path="/plats/:id" element={<Plats/>}/>
+        <Route path="/cart" element={<Cart/>}/>
       </Route>
       <Route path="/menu" element={<Menu/>}/>
-      <Route path="/cart" element={<Cart/>}/>
+      
 
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>
         <Route path="/Dashboard/manager" element={<Manager/>}/>

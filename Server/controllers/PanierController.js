@@ -2,6 +2,7 @@ const express = require('express');
 const Menu = require('../models/Menu');
 const Panier = require('../models/Panier');
 const Article = require('../models/Article');
+const  Command = require('../models/Command');
 const { ObjectId } = require('mongoose').Types;
 
 
@@ -78,4 +79,47 @@ const getPanier = async (req, res) => {
 };
 
 
-module.exports = { addToPanier, getPanier};
+const confirmOrder = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const userPanier = await Panier.find({ client: userId }).populate({
+      path: 'articles.article',
+      model: 'Article',
+    });
+
+    if (!userPanier || userPanier.length === 0) {
+      return res.status(400).json({ error: 'Empty cart. Cannot confirm order.' });
+    }
+
+    const newCommand = new Command({
+      client: userId,
+      articles: userPanier.flatMap((cart) =>
+        cart.articles.map((item) => ({
+          _id: item.article._id,
+          quantite: item.quantite,
+        }))
+      ),
+      status: 'Pending',
+    });
+
+    console.log("user : ", userId);
+    console.log("panier :", userPanier);
+    console.log("command : ", newCommand);
+
+    const confirme = await newCommand.save();
+    await Panier.deleteMany({ client: userId });
+ 
+    console.log(confirme);
+    res.json({ success: true, message: 'Order confirmed successfully.' });
+  } catch (error) {
+    console.error('Error confirming order:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+
+
+module.exports = { addToPanier, getPanier , confirmOrder};

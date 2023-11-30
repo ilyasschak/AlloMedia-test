@@ -14,6 +14,8 @@ const Menu = () => {
     }
   };
 
+  
+
   useEffect(() => {
     fetchMenus();
   }, []); 
