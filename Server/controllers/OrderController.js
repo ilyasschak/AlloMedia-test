@@ -56,6 +56,30 @@ class OrderController {
 
     }
 
+    static async comfirmOrderFromDelivery(req,res){
+
+        const {id}=req.query 
+
+
+        const updateStatus1 = await Order.updateOne({_id:id},{$set : {status : "InDelivery"}});
+
+        const orderComfirmed = await Order.findOne({_id : id}).populate({
+            path: 'articles._id',
+            module:'Article',
+            select: 'Plat prix', 
+
+        }).populate('client')
+
+       
+
+
+
+
+        res.json({ OrderComfirmed:orderComfirmed , message: 'You Order has been comfirmed for'+id });
+
+
+    }
+
     static async showComfirmOrdersToDelivery(req,res){
 
         const comfirmedOrders = await Order.find({status : "Confirmed"}).populate({

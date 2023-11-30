@@ -14,6 +14,9 @@ const Navbar = () => {
    const [notification, setNotification]= useState({ message: "", color: 'red' , num : 0})
    const [client , setClient]= useState("No notification")
 
+   const [notificationDelivery, setNotificationDelivery]= useState({ message: "", color: 'red' , num : 0})
+   const [client1 , setClient1]= useState("No notification")
+
   
     
 
@@ -31,11 +34,24 @@ const Navbar = () => {
           setClient("You have new order to delivery for "+data.orderComfirmed.client.full_name)
      
 
-          
-     
-          // alert(data.message)
       })
     },[socket])
+
+
+    useEffect(()=>{
+      
+      socket.on('recieved notification from manager', (data)=>{
+
+        console.log(data.orderComfirmed.client.full_name);
+        setNotificationDelivery({message : data.orderComfirmed, color : 'red', num : 1})
+        setClient1("The deliveryman start delivering the order for "+data.orderComfirmed.client.full_name)
+   
+
+        
+   
+        // alert(data.message)
+    })
+  },[socket])
 
 
 
@@ -176,9 +192,9 @@ const Navbar = () => {
                      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                    </svg>
                  </button>
-                   <div class= {notification.message=="" ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white" : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"}>
+                   <div class= {notificationDelivery.message=="" ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white" : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"}>
           
-                   {notification.num}
+                   {notificationDelivery.num}
 
                    </div>
                </div>
@@ -187,7 +203,7 @@ const Navbar = () => {
                <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                  <div class="py-1" role="none">
 
-                   <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{client}</a>
+                   <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{client1}</a>
                
                  </div>
                

@@ -48,6 +48,36 @@ const OrdersTable = ({orders, role}) => {
     }
 };
 
+const comfirmOrderFromDelivery =async (id) => {
+
+
+
+  try{
+
+    const url = `/orders/comfirmOrderFromDelivery?id=${id}`
+    const response = await api.get(url);
+
+      console.log(response.data.OrderComfirmed);
+
+      const orderComfirmed = response.data.OrderComfirmed;
+
+      console.log(orderComfirmed.client.full_name)
+
+      orderComfirmed.articles.map(article => (
+        console.log(article._id.Plat, article._id.prix )
+
+        
+      ))
+
+
+      socket.emit('recieved notification from delivery', { orderComfirmed });
+
+
+  }catch(err){
+     console.log(err);
+  }
+};
+
   return (
     
 
@@ -130,7 +160,7 @@ const OrdersTable = ({orders, role}) => {
                     </td>  
                     : user.role.name== "DeliveryMan" ?       
                     <td className="p-3 pr-0 flex justify-center items-center">
-                     <button  className='bg-green-700 text-white rounded p-1'>Comfirm</button> 
+                     <button  className='bg-green-700 text-white rounded p-1' onClick={()=>{comfirmOrderFromDelivery(order._id)}}>Comfirm</button> 
             
                   
                     </td> : ""
