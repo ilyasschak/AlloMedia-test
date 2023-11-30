@@ -4,7 +4,7 @@ import logo from '../../assets/images/logg.png'
 import { useEffect } from "react";
 
 const Navbar = () => {
-  const {user, logout, getUser} = useUser();
+  const {user, logout, getUser,commands} = useUser();
   const navigate = useNavigate();
   const handleLogout = async()=>{
       let response = await logout();
@@ -28,7 +28,7 @@ const Navbar = () => {
 
     {/* <a
       href="#tabs-notification"
-      class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
+      className="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
       data-te-toggle="pill"
       data-te-target="#tabs-notification"
       role="tab"
@@ -36,7 +36,7 @@ const Navbar = () => {
       aria-selected="true"
       >Notifications
       <div
-        class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
+        className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
         0
       </div>
     </a> */}
@@ -85,17 +85,17 @@ const Navbar = () => {
             </NavLink>}
             {user._id &&  <NavLink to={'/orders'}>
               <button
-                class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
+                className="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
                 >orders
                 <div
-                  class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
-                  0
+                  className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
+                  {commands.length}
                 </div>
               </button>
             </NavLink>}
             <a
               href="#tabs-notification"
-              class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
+              className="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
               data-te-toggle="pill"
               data-te-target="#tabs-notification"
               role="tab"
@@ -103,7 +103,7 @@ const Navbar = () => {
               aria-selected="true"
               >Notifications
               <div
-                class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
+                className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
                 0
               </div>
             </a>
