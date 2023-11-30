@@ -39,12 +39,38 @@ class OrderController {
 
         const updateStatus = await Order.updateOne({_id:id},{$set : {status : "Confirmed"}});
 
-        console.log(updateStatus);
+        const orderComfirmed = await Order.findOne({_id : id}).populate({
+            path: 'articles._id',
+            module:'Article',
+            select: 'Plat prix', 
 
-        res.json({ success: true, message: 'You Order has been comfirmed for'+id });
+        }).populate('client')
+
+       
+
+
+
+
+        res.json({ OrderComfirmed:orderComfirmed , message: 'You Order has been comfirmed for'+id });
 
 
     }
+
+    static async showComfirmOrdersToDelivery(req,res){
+
+        const comfirmedOrders = await Order.find({status : "Confirmed"}).populate({
+            path: 'articles._id',
+            module:'Article',
+            select: 'Plat prix', 
+
+        }).populate('client')
+
+        console.log(comfirmedOrders);
+
+        res.json({comfirmedOrders :comfirmedOrders })
+
+    }
+
 }
 
 module.exports =OrderController;

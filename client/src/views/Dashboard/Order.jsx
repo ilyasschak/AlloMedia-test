@@ -13,13 +13,7 @@ const Order =  () => {
  
   const [orders, setOrders]=useState(arr)
 
-  // const [status, changeStatus]=useState({})
 
-
-//   const handleInputChange = (e) => {
-//     changeStatus({id: e.target.name});
-// };
- 
 
   useEffect(()=>{
 
@@ -31,12 +25,13 @@ const Order =  () => {
       try{
   
         const response = await axios.get('http://localhost:3000/api/orders/show');
-        // console.log(response.data);
+        
   
   
         setOrders(response.data.orders)
-        console.log(response.data.orders);
-        // console.log(orders);
+       
+
+
        
       
   
@@ -47,10 +42,16 @@ const Order =  () => {
       }
   
     }
+   
+
 
     showOrders();
 
   },[])
+
+  // orders.map(order =>(
+  //   console.log(order.client.full_name)
+  // ))
 
 
   const ComfirmOrder =async (id) => {
@@ -62,14 +63,24 @@ const Order =  () => {
           const url = `/orders/comfirm?id=${id}`
           const response = await api.get(url);
 
-            console.log(response.data.message);
+            console.log(response.data.OrderComfirmed);
+
+            const orderComfirmed = response.data.OrderComfirmed;
+
+            console.log(orderComfirmed.client.full_name)
+
+            orderComfirmed.articles.map(article => (
+              console.log(article._id.Plat, article._id.prix )
+
+              
+            ))
 
 
-            socket.emit('nouvelle-commande', { message: 'You have new command to delivery!' });
+            socket.emit('nouvelle-commande', { orderComfirmed });
 
 
         }catch(err){
-            console.error(err);
+           console.log(err);
         }
   };
 
@@ -107,7 +118,7 @@ const Order =  () => {
                       <tr class="font-semibold text-[0.95rem] text-secondary-dark">
                         <th class="pb-3 text-start min-w-[175px]">Orders</th>
                         <th class="pb-3 text-end min-w-[100px]">OWNER</th>
-                        <th class="pb-3 text-end min-w-[100px]">PROGRESS</th>
+                        {/* <th class="pb-3 text-end min-w-[100px]">PROGRESS</th> */}
                         <th class="pb-3 pr-12 text-end min-w-[175px]">STATUS</th>
                         <th class="pb-3 pr-12 text-end min-w-[100px]">Date</th>
                         <th class="pb-3 text-end min-w-[50px]">Actions</th>
@@ -133,14 +144,14 @@ const Order =  () => {
                           </div>
                         </td>
                         <td class="p-3 pr-0 text-end">
-                          <span class="font-semibold text-light-inverse text-md/normal">{order.client.full_name}</span>
+                          <span class="font-semibold text-light-inverse text-md/normal">{order.client ? order.client.full_name : "inkonu"}</span>
                         </td>
-                        <td class="p-3 pr-0 text-end">
+                        {/* <td class="p-3 pr-0 text-end">
                           <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
                             </svg> 6.5% </span>
-                        </td>
+                        </td> */}
                         <td class="p-3 pr-12 text-end">
                           <span className={order.status == "Pending" ? "bg-red-200 text-red-900 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : order.status == "InDelivery" ?  "text-orange-800 bg-orange-200 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg": order.status == "Confirmed" ? "bg-lime-100 text-lime-800 text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" : "text-primary bg-primary-light text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg" }> {order.status} </span>
                         </td>
@@ -148,7 +159,7 @@ const Order =  () => {
                           <span class="font-semibold text-light-inverse text-md/normal">2023-08-23</span>
                         </td>
                         <td class="p-3 pr-0 text-end flex">
-                          <button  className='bg-success text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button>
+                          {order.status == "Pending" ? <button  className='bg-success text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button> : ""}
                           <button className='bg-red-600 text-white rounded p-1 m-1'>Delete</button>
                         
                         </td>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useUser } from "../../contexts/userContext";
 
+
 const Sidebar = () => {
 
     const {user, logout,getUser} = useUser();
@@ -8,7 +9,7 @@ const Sidebar = () => {
 
       <div
 id="view"
-class=" flex flex-row"
+class=" flex flex-row w-1/4"
 x-data="{ sidenav: true }"
 >
 <button
@@ -16,7 +17,7 @@ x-data="{ sidenav: true }"
   class="p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none focus:text-white absolute top-0 left-0 sm:hidden"
 >
   <svg
-    class="w-5 h-5 fill-current"
+    className="w-5 h-5 fill-current"
     fill="currentColor"
     viewBox="0 0 20 20"
     xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ x-data="{ sidenav: true }"
         >
           {user._id && <div>{user.full_name}</div>}
         </h2>
-        <p class="text-x text-white text-center">Manager</p>
+        {user._id && <p class="text-x text-white text-center">{user.role.name}</p>}
       </div>
     </div>
     <div

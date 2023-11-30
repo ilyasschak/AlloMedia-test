@@ -1,8 +1,58 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
 import dkjfjkdf from '../../assets/images/logg.png'
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000");
+
+
 
 const Navbar = () => {
+
+
+   const [notification, setNotification]= useState({ message: "", color: 'red' , num : 0})
+   const [client , setClient]= useState("No notification")
+
+  
+    
+
+
+
+
+    
+  
+    useEffect(()=>{
+      
+        socket.on('recieved notification', (data)=>{
+
+          console.log(data.orderComfirmed.client.full_name);
+          setNotification({message : data.orderComfirmed, color : 'red', num : 1})
+          setClient("You have new order to delivery for "+data.orderComfirmed.client.full_name)
+     
+
+          
+     
+          // alert(data.message)
+      })
+    },[socket])
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+   
+
   const {user, logout,getUser} = useUser();
   const navigate = useNavigate();
   const handleLogout = async()=>{
@@ -11,8 +61,10 @@ const Navbar = () => {
           getUser()
           navigate("/");
       }
-          
+      
   }
+
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-2xl  bg-opacity-100">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -64,11 +116,12 @@ const Navbar = () => {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border items-center  rounded-xl bg-white md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             
-            <NavLink to="">
-                <button className=" md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
+            {/* {user.role.name == "Client" ? 
+                <button className="bg-orange-600 md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     panie
-                </button> 
-            </NavLink>
+                </button> : ""
+            } */}
+            
             {!user._id && <NavLink to="login">
                 <button className="bg-orange-600 md:text-white text-lg text-brand px-3 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     Login
@@ -79,28 +132,79 @@ const Navbar = () => {
                 Sign Up
                 </button> 
             </NavLink>}
-            <a
-              href="#tabs-notification"
-              class="font-bold relative my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-6 py-3 text-xs  uppercase leading-tight text-[#4b5563] hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-[#2563eb] data-[te-nav-active]:text-[#2563eb] dark:hover:bg-transparent"
-              data-te-toggle="pill"
-              data-te-target="#tabs-notification"
-              role="tab"
-              aria-controls="tabs-notification"
-              aria-selected="true"
-              >Notifications
-              <div
-                class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
-                0
-              </div>
-            </a>
-            {/* {user._id && <div>{user.full_name}</div>} */}
+           
+            {user._id && user.role.name === "DeliveryMan"  &&             
+           
+
+                <div class="relative inline-block text-left">
+                    <div>
+                      <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        Notification
+                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                        <div class= {notification.message=="" ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white" : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"}>
+               
+                        {notification.num}
+
+                        </div>
+                    </div>
+
+
+                    <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                      <div class="py-1" role="none">
+
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{client}</a>
+                    
+                      </div>
+                    
+                    </div>
+                </div>
+
+                }
+
+
+        {user._id && user.role.name === "Manager"  &&             
+           
+
+           <div class="relative inline-block text-left">
+               <div>
+                 <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                   Notification
+                   <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                   </svg>
+                 </button>
+                   <div class= {notification.message=="" ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white" : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"}>
+          
+                   {notification.num}
+
+                   </div>
+               </div>
+
+
+               <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                 <div class="py-1" role="none">
+
+                   <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{client}</a>
+               
+                 </div>
+               
+               </div>
+           </div>
+
+           }
             {user._id &&  <NavLink to={'/me'}>
-                <button className="bg-orange-600 rounded-md text-white px-3 py-2 mx-1 bg-white">
+                <button className="bg-orange-600 rounded-md text-white px-3 py-2 mx-1 ">
                     Profile
                 </button>
+  
             </NavLink>}
+
+            
           
-            {user._id && <button className=" rounded-md text-brand px-3 py-2 mx-1 bg-white" onClick={handleLogout}>logout</button>}
+           
             {user._id && <button className="bg-orange-600 rounded-md text-white px-3 py-2 mx-1 " onClick={handleLogout}>logout</button>}
           </ul>
         </div>
