@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 // import MapModal from "./MapModal";
 import { useUser } from "../../contexts/userContext"
+import api from "../../api"
+import { io } from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
 
 const OrdersTable = ({orders, role}) => {
 
@@ -13,11 +16,43 @@ const OrdersTable = ({orders, role}) => {
   }
   const {user , sendVerification,getUser} = useUser();
 
+
+  
+  const ComfirmOrder =async (id) => {
+
+
+
+    try{
+
+      const url = `/orders/comfirm?id=${id}`
+      const response = await api.get(url);
+
+        console.log(response.data.OrderComfirmed);
+
+        const orderComfirmed = response.data.OrderComfirmed;
+
+        console.log(orderComfirmed.client.full_name)
+
+        orderComfirmed.articles.map(article => (
+          console.log(article._id.Plat, article._id.prix )
+
+          
+        ))
+
+
+        socket.emit('nouvelle-commande', { orderComfirmed });
+
+
+    }catch(err){
+       console.log(err);
+    }
+};
+
   return (
     
 
     <div className="w-3/4">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/>
+        {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/> */}
       <div className="flex flex-wrap -mx-3 mb-5 w-10/12 justify-center">
         <div className=" px-3 mb-6  mx-auto">
           <div className=" relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
@@ -69,11 +104,11 @@ const OrdersTable = ({orders, role}) => {
                           <span className="font-semibold text-light-inverse text-md/normal">{order.articles.length}</span>
                         </td>
                         <td className="p-3 pr-0 text-end">
-                          <span className="font-semibold text-light-inverse text-md/normal">{order.client.full_name}</span>
+                          <span className="font-semibold text-light-inverse text-md/normal">{order.client ? order.client.full_name : "inkonu"}</span>
                         </td>
 
                         {role== "DeliveryMan" || role== "Manager"&&  <td className="p-3 pr-0 text-end">
-                          <span className="font-semibold text-light-inverse text-md/normal">{order.client.phone_number}</span>
+                          <span className="font-semibold text-light-inverse text-md/normal">{order.client ? order.client.phone_number : "no number"}</span>
                         </td>}
                         <td className="p-3 pr-0 text-end">
 
@@ -95,7 +130,7 @@ const OrdersTable = ({orders, role}) => {
                     </td>  
                     : user.role.name== "DeliveryMan" ?       
                     <td className="p-3 pr-0 flex justify-center items-center">
-                     <button  className='bg-success text-white rounded p-1'>Comfirm</button> 
+                     <button  className='bg-green-700 text-white rounded p-1'>Comfirm</button> 
             
                   
                     </td> : ""
@@ -104,7 +139,7 @@ const OrdersTable = ({orders, role}) => {
 
                    {role == "Manager" &&   
                         <td class="p-3 pr-0 text-end">
-                          {order.status == "Pending" ? <button  className='bg-success text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button> : ""}
+                          {order.status == "Pending" ? <button  className='bg-green-700 text-white rounded p-1' onClick={()=>{ComfirmOrder(order._id)}}>Comfirm</button> : ""}
                           <button className='bg-red-600 text-white rounded p-1 m-1'>Delete</button>
                         
                         </td>}
