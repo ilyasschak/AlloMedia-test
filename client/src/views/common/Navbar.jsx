@@ -40,12 +40,15 @@ const Navbar = () => {
         color: "red",
         num: 1,
       });
+
       setClient1(
         "The deliveryman start delivering the order for " +
           data.orderComfirmed.client.full_name
       );
     });
   }, [socket]);
+
+  console.log(client1);
 
   const { user, logout, getUser } = useUser();
   const navigate = useNavigate();

@@ -5,65 +5,45 @@ import io from "socket.io-client";
 import OrdersTable from "../common/ordersTable";
 const socket = io.connect("http://localhost:3000");
 import api from "../../api";
+import {useOrders} from "../../contexts/orderContext"
 
 const Profile = () => {
+
+const {
+  showOrders,
+  showComfirmOrdersToDelivery,
+  orders,
+  Allorders,
+  ComfirmOrder,
+  comfirmOrderFromDelivery,
+  deletOrder,
+} = useOrders();
+
+
+
+
+useEffect(() => {
+  showOrders();
+  showComfirmOrdersToDelivery();
+}, [ComfirmOrder, comfirmOrderFromDelivery, deletOrder]);
+
   const { user, sendVerification, getUser } = useUser();
   const [verificationSent, setVerificationSent] = useState(false);
-  const [orders, setOrders] = useState([]);
-  const [Allorders, setAllOrders] = useState([]);
+
 
   const doSendVerification = async () => {
     let response = await sendVerification();
     if (response.status == 200) setVerificationSent(true);
   };
+
   useEffect(() => {
     getUser();
     console.log(user.role.name);
   }, []);
 
 
-    const showComfirmOrdersToDelivery = async () => {
-      try {
-        const url = `/orders/showComfirmOrdersToDelivery`;
-        const response = await api.get(url);
-
-        console.log(response);
 
 
-        setOrders(response.data.comfirmedOrders);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-
-  useEffect(() => {
-    showComfirmOrdersToDelivery();
-  }, []);
-  // useEffect(() => {
-  //   socket.on("received notification", () => {
-  //     showComfirmOrdersToDelivery();
-  //   });
-  // }, [socket]);
-
-
-  useEffect(() => {
-    const showOrders = async () => {
-      try {
-        const url = `/orders/show`;
-
-        const response = await api.get(url);
-
-        console.log(response.data);
-
-        setAllOrders(response.data.orders);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    showOrders();
-  }, []);
 
   return (
     <div className="flex">
