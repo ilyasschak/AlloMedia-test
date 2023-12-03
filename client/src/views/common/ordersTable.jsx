@@ -8,7 +8,7 @@ import {useOrders} from "../../contexts/orderContext";
 
 const OrdersTable = ({orders, role}) => {
 
-  // const { ComfirmOrder, comfirmOrderFromDelivery, deletOrder } = useOrders();
+  const { confirmOrder, comfirmOrderFromDelivery, deletOrder } = useOrders();
 
   const calculateThePrice = articles => {
     let count = 0;
@@ -19,84 +19,19 @@ const OrdersTable = ({orders, role}) => {
   }
   const {user , sendVerification,getUser} = useUser(); 
   
-  // function handelComfirmOrder(id){
-  //   ComfirmOrder(id)
-  // }
-  //  function handelcomfirmOrderFromDelivery(id) {
-  //    comfirmOrderFromDelivery(id);
-  //  }
-
-  //   function handeldeletOrder(id) {
-  //     deletOrder(id);
-  //   }
-
-
-  const ComfirmOrder =async (id) => {
-
-
-
-    try{
-
-      const url = `/orders/comfirm?id=${id}`
-      const response = await api.get(url);
-
-        console.log(response.data.OrderComfirmed);
-
-        const orderComfirmed = response.data.OrderComfirmed;
-
-        console.log(orderComfirmed.client.full_name)
-
-        orderComfirmed.articles.map(article => (
-          console.log(article._id.Plat, article._id.prix )
-
-          
-        ))
-
-
-        socket.emit('nouvelle-commande', { orderComfirmed });
-
-
-    }catch(err){
-       console.log(err);
-    }
-  };
-
-  const comfirmOrderFromDelivery =async (id) => {
-    try{
-
-      const url = `/orders/comfirmOrderFromDelivery?id=${id}`
-      const response = await api.get(url);
-
-        console.log(response.data.OrderComfirmed);
-
-        const orderComfirmed = response.data.OrderComfirmed;
-
-        console.log(orderComfirmed.client.full_name)
-
-        orderComfirmed.articles.map(article => (
-          console.log(article._id.Plat, article._id.prix )
-        ))
-        socket.emit('recieved notification from delivery', { orderComfirmed });
-
-
-    }catch(err){
-      console.log(err);
-    }
-  };
-
-
-  const deletOrder = async(id)=>{
-    try{
-
-    const url = `/orders/deleteOrder?id=${id}`;
-    const response = await api.get(url);
-
-    console.log(response);
-
-    }catch(err){
-      console.log(err);
-    }
+  function handelComfirmOrder(id){
+    confirmOrder(id);
   }
+   function handelcomfirmOrderFromDelivery(id) {
+     comfirmOrderFromDelivery(id);
+   }
+
+    function handeldeletOrder(id) {
+      deletOrder(id);
+    }
+
+
+ 
 
   return (
     <div className="w-3/4">
@@ -254,7 +189,7 @@ const OrdersTable = ({orders, role}) => {
                               <button
                                 className="bg-green-700 text-white rounded p-1"
                                 onClick={() => {
-                                  comfirmOrderFromDelivery(order._id);
+                                  handelcomfirmOrderFromDelivery(order._id);
                                 }}
                               >
                                 Comfirm
@@ -270,7 +205,7 @@ const OrdersTable = ({orders, role}) => {
                                 <button
                                   className="bg-green-700 text-white rounded p-1"
                                   onClick={() => {
-                                    ComfirmOrder(order._id);
+                                    handelComfirmOrder(order._id);
                                   }}
                                 >
                                   Comfirm
@@ -281,7 +216,7 @@ const OrdersTable = ({orders, role}) => {
                               <button
                                 className="bg-red-600 text-white rounded p-1 m-1"
                                 onClick={() => {
-                                  deletOrder(order._id);
+                                  handeldeletOrder(order._id);
                                 }}
                               >
                                 Delete

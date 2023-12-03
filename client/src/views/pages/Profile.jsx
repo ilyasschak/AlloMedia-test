@@ -8,28 +8,30 @@ import api from "../../api";
 import {useOrders} from "../../contexts/orderContext"
 
 const Profile = () => {
+  const {
+    showOrders,
+    showComfirmOrdersToDelivery,
+    orders,
+    Allorders,
+    confirmOrder,
+    comfirmOrderFromDelivery,
+    deletOrder,
+    orderComfirmed,
+    orderComfirmed2,
+    delete1
+  } = useOrders();
 
-const {
-  showOrders,
-  showComfirmOrdersToDelivery,
-  orders,
-  Allorders,
-  ComfirmOrder,
-  comfirmOrderFromDelivery,
-  deletOrder,
-} = useOrders();
+ 
 
 
 
-
-useEffect(() => {
-  showOrders();
-  showComfirmOrdersToDelivery();
-}, [ComfirmOrder, comfirmOrderFromDelivery, deletOrder]);
+    useEffect(() => {
+      showComfirmOrdersToDelivery();
+      showOrders();
+    }, [orderComfirmed2, orderComfirmed, delete1]);
 
   const { user, sendVerification, getUser } = useUser();
   const [verificationSent, setVerificationSent] = useState(false);
-
 
   const doSendVerification = async () => {
     let response = await sendVerification();
@@ -40,10 +42,6 @@ useEffect(() => {
     getUser();
     console.log(user.role.name);
   }, []);
-
-
-
-
 
   return (
     <div className="flex">

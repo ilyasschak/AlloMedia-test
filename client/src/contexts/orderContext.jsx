@@ -11,6 +11,13 @@ export function OrderProvider({children}){
       const [orders, setOrders] = useState([]);
       const [Allorders, setAllOrders] = useState([]);
 
+      
+      const [orderComfirmed, setorderComfirmed]=useState("");
+      const [orderComfirmed2, setorderComfirmed2] = useState("");
+
+       const [delete1, setdelete] = useState("");
+      
+
 
      const showOrders = async () => {
        try {
@@ -42,7 +49,7 @@ export function OrderProvider({children}){
 
 
 
-          const ComfirmOrder = async (id) => {
+          const confirmOrder = async (id) => {
             try {
               const url = `/orders/comfirm?id=${id}`;
               const response = await api.get(url);
@@ -51,15 +58,19 @@ export function OrderProvider({children}){
 
               const orderComfirmed = response.data.OrderComfirmed;
 
+              
+              
               console.log(orderComfirmed.client.full_name);
 
               orderComfirmed.articles.map((article) =>
                 console.log(article._id.Plat, article._id.prix)
               );
 
-              updateState("stateUpdated");
+             
 
               socket.emit("nouvelle-commande", { orderComfirmed });
+
+              setorderComfirmed(orderComfirmed);
             } catch (err) {
               console.log(err);
             }
@@ -76,10 +87,14 @@ export function OrderProvider({children}){
 
               console.log(orderComfirmed.client.full_name);
 
+             
+
             //   orderComfirmed.articles.map((article) =>
             //     console.log(article._id.Plat, article._id.prix)
             //   );
               socket.emit("recieved notification from delivery", { orderComfirmed });
+
+               setorderComfirmed2(orderComfirmed);
             } catch (err) {
               console.log(err);
             }
@@ -89,6 +104,8 @@ export function OrderProvider({children}){
             try {
               const url = `/orders/deleteOrder?id=${id}`;
               const response = await api.get(url);
+
+              setdelete(response.data);
 
               console.log(response);
             } catch (err) {
@@ -103,13 +120,16 @@ export function OrderProvider({children}){
         value={{
           deletOrder,
           comfirmOrderFromDelivery,
-          ComfirmOrder,
+          confirmOrder,
           showComfirmOrdersToDelivery,
           showOrders,
           setAllOrders,
           Allorders,
           setOrders,
           orders,
+          orderComfirmed,
+          orderComfirmed2,
+          delete1,
         }}
       >
         {children}

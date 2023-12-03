@@ -7,6 +7,20 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3000");
 
 const Navbar = () => {
+
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const handleButtonClick = () => {
+      
+      setIsDropdownOpen(!isDropdownOpen);
+    };
+
+     const handleDropdownClick = () => {
+       
+       window.location.reload();
+     };
+
   const [notification, setNotification] = useState({
     message: "",
     color: "red",
@@ -121,6 +135,7 @@ const Navbar = () => {
                     id="menu-button"
                     aria-expanded="true"
                     aria-haspopup="true"
+                    onClick={handleButtonClick}
                   >
                     Notification
                     <svg
@@ -146,26 +161,28 @@ const Navbar = () => {
                     {notification.num}
                   </div>
                 </div>
-
-                <div
-                  class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="menu-button"
-                  tabindex="-1"
-                >
-                  <div class="py-1" role="none">
-                    <a
-                      href="#"
-                      class="text-gray-700 block px-4 py-2 text-sm"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="menu-item-0"
-                    >
-                      {client}
-                    </a>
+                {isDropdownOpen && (
+                  <div
+                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabindex="-1"
+                    onClick={handleDropdownClick}
+                  >
+                    <div class="py-1" role="none">
+                      <a
+                        href="#"
+                        class="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                      >
+                        {client}
+                      </a>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -178,6 +195,7 @@ const Navbar = () => {
                     id="menu-button"
                     aria-expanded="true"
                     aria-haspopup="true"
+                    onClick={handleButtonClick}
                   >
                     Notification
                     <svg
@@ -203,26 +221,28 @@ const Navbar = () => {
                     {notificationDelivery.num}
                   </div>
                 </div>
-
-                <div
-                  class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="menu-button"
-                  tabindex="-1"
-                >
-                  <div class="py-1" role="none">
-                    <a
-                      href="#"
-                      class="text-gray-700 block px-4 py-2 text-sm"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="menu-item-0"
-                    >
-                      {client1}
-                    </a>
+                {isDropdownOpen && (
+                  <div
+                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabindex="-1"
+                    onClick={handleDropdownClick}
+                  >
+                    <div class="py-1" role="none">
+                      <a
+                        href="#"
+                        class="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                      >
+                        {client1}
+                      </a>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
             {user._id && (

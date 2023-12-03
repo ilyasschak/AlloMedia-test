@@ -25,9 +25,6 @@ import RestaurantsMap from "./views/pages/RestaurantsMap.jsx";
 import PopupsController from "./views/common/PopupsController.jsx";
 import Menu from "./components/menu/menu";
 
-import Livreur from "./views/Dashboard/Livreur";
-import Manager from "./views/Dashboard/Manager";
-import Order from "./views/Dashboard/Order";
 
 function App() {
   const {user} = useUser();
@@ -49,9 +46,7 @@ function App() {
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
         <Route path="/menu" element={<Menu/>}/> 
-        <Route path="/Dashboard/livreur" element={<Livreur/>}/>
-        <Route path="/Dashboard/manager" element={<Manager/>}/>
-        <Route path="/Dashboard/orders" element={<Order/>}/>
+     
       </Route>
       <Route path="/menu" element={<Menu/>}/>
 
