@@ -121,7 +121,6 @@ const getCommands = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    // Retrieve commands for the user
     const userCommands = await Command.find({ client: userId })
       .populate({
         path: 'articles._id',
@@ -141,6 +140,37 @@ const getCommands = async (req, res) => {
 };
 
 
+const updateQuantity = async (req, res) => {
+  try {
+    const { quantity } = req.body;
+    const article = JSON.parse(req.params.article)
+
+    console.log(article)
+    if (!article || !quantity) throw new Error("Missing parameters");
+
+    const articleObjectId = ObjectId.createFromHexString(article._id);
+    console.log("article id  : ",  articleObjectId);
+    try {
+      const userPanier = await Panier.findOneAndUpdate(
+        { "_id": articleObjectId },
+        { $set: { 'articles.$[elem].quantite': quantity } },
+        { new: true, arrayFilters: [{ 'elem.article': article.articles[0].article }] }
+      ).populate({
+        path: 'articles.article',
+        model: 'Article',
+      });
+      console.log(userPanier);
+    } catch (error) {
+      console.log(error);
+    }
 
 
-module.exports = { addToPanier, getPanier , confirmOrder , getCommands};
+    // res.json(userPanier); 
+   }catch (error) {
+    console.error('Error updating quantity:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+module.exports = { addToPanier, getPanier , confirmOrder , getCommands , updateQuantity};

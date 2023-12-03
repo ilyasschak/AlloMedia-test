@@ -6,67 +6,48 @@ const Cart = () => {
   let total = 0;
   const navigate = useNavigate();
 
+  const incrementQuantity = async (article) => {
+    try {
+      const stringArticle = JSON.stringify(article)
+      const response = await api.put(`http://localhost:3000/api/cart/updateQuantity/${stringArticle}`, {
+        quantity: article.articles[0].quantite + 1, 
+      });
+      setUserPanier(response.data);
+    } catch (error) {
+      console.error('Error updating quantity:', error.message);
+    }
+  };
+  
+  const decrementQuantity = async (article) => {
+    try {
+      const stringArticle = JSON.stringify(article)
+      const response = await api.put(`http://localhost:3000/api/cart/updateQuantity/${stringArticle}`, {
+        quantity:article.articles[0].quantite  -1,
+      });
+      setUserPanier(response.data);
+    } catch (error) {
+      console.error('Error updating quantity:', error.message);
+    }
+  };
+
   useEffect(() => {
     const getPanier = async () => {
       try {
         const response = await api.get('http://localhost:3000/api/cart/panier');
         setUserPanier(response.data,"hiiii")
-        console.log(response);
       } catch (error) {
         console.error('Error getting Panier:', error.message);
       }
     };
   
     getPanier();
-  }, []);
-
-  const incrementQuantity = (articleId) => {
-    const updatedPanier = userPanier.map((article) => {
-      if (article._id === articleId._id) {
-        return {
-          ...article,
-          articles: [
-            {
-              ...article.articles[0],
-              quantite: article.articles[0].quantite + 1,
-            },
-          ],
-        };
-      }
-      return article;
-    });
-    console.log(updatedPanier);
-    setUserPanier(updatedPanier);
-  };
-
-  const decrementQuantity = (articleId) => {
-    // console.log(articleId._id);
-    const updatedPanier = userPanier.map((article) => {
-      if (article._id === articleId._id && article.articles[0].quantite > 0) {
-        return {
-          ...article,
-          articles: [
-            {
-              ...article.articles[0],
-              quantite: article.articles[0].quantite - 1,
-            },
-          ],
-        };
-      }
-      return article;
-    });
-
-    setUserPanier(updatedPanier);
-  };
+  }, [userPanier]);
 
   const ConfirmOrder = async () => {
     try {
-      // Make a request to your server to confirm the order
       const response = await api.post('http://localhost:3000/api/cart/confirmOrder');
       console.log(response);
-  
-      // Optionally, you can handle the response or navigate the user to a confirmation page
-    } catch (error) {
+      } catch (error) {
       console.error('Error confirming order:', error.message);
     }
   };
@@ -132,7 +113,7 @@ const Cart = () => {
         </div>
           ))
           ) : (
-            <p>Loading...</p>
+            <p>panier vide</p>
           )}
         <a onClick={()=>navigate('/menu')} href="#" className="flex font-semibold text-indigo-600 text-sm mt-10">
       

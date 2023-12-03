@@ -50,13 +50,12 @@ function App() {
         <Route path="/map" element={<RestaurantsMap/>}/>
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/get-users" element={<LiveCoding/>}/>
-        <Route path="/menu" element={<Menu/>}/>
-        <Route path="/plats/:id" element={<Plats/>}/>
         <Route path="/command" element={<Command/>}/>
+        <Route path="/plats/:id" element={<Plats/>}/>
         <Route path="/cart" element={<Cart/>}/>
       </Route>
-      <Route path="/menu" element={<Menu/>}/>
       
+      <Route path="/menu" element={<Menu/>}/>
 
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>
         <Route path="/Dashboard/manager" element={<Manager/>}/>
