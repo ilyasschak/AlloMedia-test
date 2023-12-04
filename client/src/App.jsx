@@ -25,16 +25,12 @@ import PopupsController from "./views/common/PopupsController.jsx";
 import MyMenu from "./components/menu/MyMenu.jsx";
 import Cart from "./components/panier/panier";
 import Plats from "./components/articles/plat.jsx"
-import Livreur from "./views/Dashboard/Livreur";
-import Manager from "./views/Dashboard/Manager";
-import Order from "./views/Dashboard/Order";
 import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
 import AddMenu from "./components/menu/addMenu.jsx";
 import UpdateMenu from "./components/menu/UpdateMenu.jsx";
 import ClientOrders from "./views/pages/ClientOrders";
 import TrackingMap from "./views/maps/TrackingMap.jsx";
 import StartTracking from "./views/common/StartTracking.jsx";
-
 
 function App() {
   const { user } = useUser();
@@ -66,9 +62,7 @@ function App() {
       </Route>
       {/* <Route path="/menu" element={<Menu/>}/> */}
         <Route path="/cart" element={<Cart/>}/>
-        <Route path="/Dashboard/livreur" element={<Livreur/>}/>
-        <Route path="/Dashboard/manager" element={<Manager/>}/>
-        <Route path="/Dashboard/orders" element={<Order/>}/>
+      
       </Route>
     )
   );

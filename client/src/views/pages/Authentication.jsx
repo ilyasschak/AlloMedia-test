@@ -41,7 +41,7 @@ const Authentication = () => {
   return (
     <div className='authentication'>
       <form action="" onSubmit={login}>
-        <h1>Login To Your Account</h1>
+        <h1 className='text-black'>Login To Your Account</h1>
         <div>
           <input type="text" value={email} onChange={()=>changeEmail(event)}  placeholder='Email' />
         </div>

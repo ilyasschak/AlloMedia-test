@@ -13,7 +13,7 @@ const LandingPage = () => {
          <Outlet />
         </div>
         <div className="flex flex-col gap-12 justify-center flex-1">
-          <h1 className="font-extrabold text-white text-7xl"><span className="text-brand">Delivering</span> <br/>Convenience <br/>to Your Doorstep!</h1>
+          <h1 className="font-extrabol text-7xl"><span className="text-orange-800">Delivering</span> <br/>Convenience <br/>to Your Doorstep!</h1>
         </div>
       </div>
   )
