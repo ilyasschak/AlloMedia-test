@@ -23,7 +23,7 @@ jobs:
         node-version: 18
 
     - name: Install server dependencies
-      working-directory: server
+      working-directory: Server
       run: |
         npm install
   
@@ -46,6 +46,6 @@ jobs:
           node-version: 18
   
       - name: Run server tests
-        working-directory: server
+        working-directory: Server
         run: |
           npm run test
