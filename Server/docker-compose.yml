@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  server:
+    image: image-server  # replace with the actual name of your Docker image
+    container_name: server
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: ["npm", "run", "dev"]
+    # Add any additional configurations or environment variables here
