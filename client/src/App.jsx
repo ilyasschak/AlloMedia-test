@@ -51,7 +51,7 @@ function App() {
           <Route path="/map" element={<RestaurantsMap/>}/>
           <Route path="/popup" element={<PopupsController/>}/>
           <Route path="/menu" element={<Menu/>}/>
-          <Route path="/track" element={<StartTracking/>}/>
+          <Route path="/routing" element={<StartTracking/>}/>
         </Route>
         <Route path="/menu" element={<Menu/>}/>
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>

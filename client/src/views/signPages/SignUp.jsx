@@ -51,7 +51,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const handleRegister = async ()=>{
     let response = await register();
-    if(response.status == 201) navigate("/registerSuccess");
+    console.log(response);
+    if(response.status && response.status == 201) navigate("/registerSuccess");
     else {
       setMessage(response.data.message)
       console.log(response.message);

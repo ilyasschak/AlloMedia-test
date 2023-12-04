@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { sendEMail } = require("../utils/emailSender");
 const { emailVerificationMessage } = require("../utils/messagesGenerator");
 const Command = require("../models/Command");
+const Role = require("../models/Role");
 const Article = require("../models/Article");
 class AuthController {
   static async me(req, res) {
@@ -12,6 +13,7 @@ class AuthController {
       .select("-password")
       .populate({
         path: "role",
+        model:'Role',
         select: "name",
       });
       if (user.role.name === "Client") {
