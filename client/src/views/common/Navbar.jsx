@@ -74,7 +74,7 @@ const Navbar = () => {
                 </button> 
             </NavLink>
             {!user._id && <NavLink to="login">
-                <button className="text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
+                <button className="bg-brand md:text-white text-lg text-brand px-6 py-2 rounded-xl w-max-content transform scale-100 hover:scale-110 transition-transform">
                     Login
                 </button> 
             </NavLink>}
@@ -107,7 +107,6 @@ const Navbar = () => {
                 0
               </div>
             </a>
-
             {/* {user._id && <div>{user.full_name}</div>} */}
             {user._id &&  <NavLink to={'/me'}>
                 <button className="bg-orange-600 hover:bg-gray-100 px-3 py-2 mx-1 bg-white">

@@ -50,7 +50,9 @@ app.use('/api/user/client', require('./routes/ClientRoutes'));
 app.use('/api/user/DeliveryMan', require('./routes/DeliveryManRoutes'));
 app.use('/api/user/Manager', require('./routes/ManagerRoutes'));
 app.use('/api/menu', require('./routes/MenuRoutes'));
+app.use('/api/menu', require('./routes/PlatRoutes'));
 app.use('/api/panier', require('./routes/PanierRoutes'));
+app.use('/api/cart', require('./routes/PanierRoutes'));
 app.use('/api/tracking', require('./routes/TrackingRoutes')(io));
 
 app.use('/api/orders', require('./routes/OrderRoutes'));
