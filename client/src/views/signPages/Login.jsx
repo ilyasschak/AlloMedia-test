@@ -46,7 +46,6 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 max-w-screen-xl justify-center items-center">
-      
       <form
         onSubmit={formik.handleSubmit}
         action=""
