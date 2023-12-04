@@ -33,6 +33,7 @@ jobs:
         npm install
         
   test:
+      needs: build
       runs-on: windows-latest
   
       steps:
