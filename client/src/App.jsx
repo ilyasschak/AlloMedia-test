@@ -25,6 +25,7 @@ import PopupsController from "./views/common/PopupsController.jsx";
 import MyMenu from "./components/menu/MyMenu.jsx";
 import Cart from "./components/panier/panier";
 import Plats from "./components/articles/plat.jsx"
+import  Command  from "./components/command/command.jsx";
 import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
 import AddMenu from "./components/menu/addMenu.jsx";
 import UpdateMenu from "./components/menu/UpdateMenu.jsx";
@@ -52,16 +53,17 @@ function App() {
         <Route path="/map" element={<RestaurantsMap/>}/>
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/restaurants/:restaurant_id" element={<RestaurantPage/>} />
-        <Route path="/get-users" element={<LiveCoding/>}/>
+        {/* <Route path="/get-users" element={<LiveCoding/>}/> */}
         <Route path ="/addMenu" element={<AddMenu/>}/> 
         <Route path="/myMenu" element={<MyMenu/>}/>
         <Route path="/menu/:id" element = {<UpdateMenu/>} />
         <Route path="/plats/:id" element={<Plats/>}/>
         <Route path="/routing" element={<StartTracking/>}/>
-          
+        <Route path="/command" element={<Command/>}/>
+        <Route path="/cart" element={<Cart/>}/>
+
       </Route>
       {/* <Route path="/menu" element={<Menu/>}/> */}
-        <Route path="/cart" element={<Cart/>}/>
       
       </Route>
     )

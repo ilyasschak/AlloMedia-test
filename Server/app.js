@@ -53,6 +53,9 @@ app.use('/api/menu', require('./routes/MenuRoutes'));
 app.use('/api/menu', require('./routes/PlatRoutes'));
 app.use('/api/panier', require('./routes/PanierRoutes'));
 app.use('/api/cart', require('./routes/PanierRoutes'));
+app.use('/api/cart', require('./routes/PanierRoutes'))
+app.use('/api/cart', require('./routes/PanierRoutes'))
+app.use('/api/', require('./routes/PanierRoutes'))
 app.use('/api/tracking', require('./routes/TrackingRoutes')(io));
 
 app.use('/api/orders', require('./routes/OrderRoutes'));

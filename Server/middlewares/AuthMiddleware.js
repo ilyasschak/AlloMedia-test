@@ -5,7 +5,6 @@ const Role = require("../models/Role");
 async function verifyLocalToken(req, res, next) {
   const accessToken = req.cookies["accessToken"];
   const refreshToken = req.cookies["refreshToken"];
-
   if (!accessToken && !refreshToken) {
     return res.status(401).json({ message: "Action denied" });
   }

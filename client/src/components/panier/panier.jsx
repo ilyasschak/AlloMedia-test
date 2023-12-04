@@ -1,109 +1,142 @@
 import  { useEffect, useState } from 'react';
 import api from "../../api"
+import { useNavigate } from 'react-router-dom';
 const Cart = () => {
-  const [userPanier, setUserPanier] = useState(null);
+  const [userPanier, setUserPanier] = useState([]);
+  let total = 0;
+  const navigate = useNavigate();
+
+  const incrementQuantity = async (article) => {
+    try {
+      const stringArticle = JSON.stringify(article)
+      const response = await api.put(`http://localhost:3000/api/cart/updateQuantity/${stringArticle}`, {
+        quantity: article.articles[0].quantite + 1, 
+      });
+      setUserPanier(response.data);
+    } catch (error) {
+      console.error('Error updating quantity:', error.message);
+    }
+  };
+  
+  const decrementQuantity = async (article) => {
+    try {
+      const stringArticle = JSON.stringify(article)
+      const response = await api.put(`http://localhost:3000/api/cart/updateQuantity/${stringArticle}`, {
+        quantity:article.articles[0].quantite  -1,
+      });
+      setUserPanier(response.data);
+    } catch (error) {
+      console.error('Error updating quantity:', error.message);
+    }
+  };
 
   useEffect(() => {
     const getPanier = async () => {
       try {
         const response = await api.get('http://localhost:3000/api/cart/panier');
-  
-        setUserPanier(response.data);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch cart data: ${response.status} - ${response.statusText}`);
-        }
-  
-        const panierData = await response.json();
-  
-        console.log("panier", panierData);
-
-        if (!panierData || !panierData.articles) {
-          throw new Error('Invalid response format: Missing articles in Panier data');
-        }
-  
-        setUserPanier(panierData);
+        setUserPanier(response.data,"hiiii")
       } catch (error) {
         console.error('Error getting Panier:', error.message);
       }
     };
   
     getPanier();
-  }, []);
-  
-  console.log(userPanier);
+  }, [userPanier]);
+
+  const ConfirmOrder = async () => {
+    try {
+      const response = await api.post('http://localhost:3000/api/cart/confirmOrder');
+      console.log(response);
+      } catch (error) {
+      console.error('Error confirming order:', error.message);
+    }
+  };
+
 
   if (!userPanier) {
     return <p>Loading...</p>;
   }
+  userPanier.forEach((article) => {
+    total += article.articles[0].article?.prix * article.articles[0]?.quantite;
+  });
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {userPanier ? (
-          userPanier.articles.map((article) => (
-            
-            <div key={article.id} className="flex flex-col md:flex-row -mx-4">
-              <div className="md:flex-1 px-4">
-                {/* ... (existing code for image and buttons) */}
-              </div>
-              <div className="md:flex-1 px-4">
-                <h2 className="text-2xl font-bold text-black mb-2">{article.Plat}</h2> 
-                <p className="text-black text-sm mb-4">
-                  {}
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed ante justo. Integer euismod libero id
-                  mauris malesuada tincidunt.
-                </p>
-                <div className="flex mb-4">
-                  <div className="mr-4">
-                    <span className="font-bold text-black">Price:</span>
-                    <span className="text-black">{/* Use article price */}$29.99</span>
-                  </div>
-                </div>
-                <div className="mb-4">
-                  <span className="font-bold text-black">Quantity :</span>
-                  <div className="flex items-center mt-2">
-                    {/* You can use article.quantity here */}
-                    <button
-                      className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                      </svg>
-                    </button>
-                    <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">
-                      {article.quantite}
-                    </div>
-                    <button
+      <div>
+      <body className="pt-24">
+  <div className="container mx-auto mt-10">
+    <div className="flex shadow-md my-10">
+      <div className="w-3/4 bg-white px-10 py-10">
+        <div className="flex justify-between border-b pb-8">
+          <h1 className="font-semibold text-2xl">Shopping Cart</h1>
+          <h2 className="font-semibold text-2xl">{userPanier.length} Items</h2>
+        </div>
+        <div className="flex mt-10 mb-5">
+          <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+        </div>
+        
+        {userPanier && userPanier.length > 0 ? (
+          userPanier.map((article)=> (
+        <div key={article._id} className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+          <div className="flex w-2/5">
+            <div className="w-20">
+              <img className="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt=""/>
+            </div>
+            <div className="flex flex-col justify-between ml-4 flex-grow">
+              <span className="font-bold text-sm">{article.articles[0].article?.Plat}</span>
+              <span className="text-red-500 text-xs w-[250px]">{article.articles[0].article?.description}</span>
+              <a href="#" className="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+            </div>
+          </div>
+          <div className="flex justify-center w-1/5">
+
+          <button  onClick={() => decrementQuantity(article)}
+       className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+               >
+            <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+            </svg>
+          </button>
+           <span className="text-black px-3">{article.articles[0]?.quantite}</span>
+           <button
+                      onClick={() => incrementQuantity(article)}
                       className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
+              <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+            </svg>
+           </button>
+          </div>
+          <span className="text-center w-1/5 font-semibold text-sm">${article.articles[0].article?.prix}</span>
+          <span className="text-center w-1/5 font-semibold text-sm">${(article.articles[0].article?.prix * article.articles[0]?.quantite).toFixed(2)}</span>
+        </div>
           ))
-        ) : (
-          <p>Loading...</p>
-        )}
+          ) : (
+            <p>Panier Vide</p>
+          )}
+        <a onClick={()=>navigate('/menu')} href="#" className="flex font-semibold text-indigo-600 text-sm mt-10">
+      
+          <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
+          Continue Shopping
+        </a>
+      </div>
+
+      <div id="summary" className="w-1/4 px-8 py-10">
+        <div className="border-t mt-8">
+          <div className="flex font-semibold justify-between py-6 text-sm uppercase">
+            <span>Total cost</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
+          <button onClick={ConfirmOrder} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Confirmer</button>
+        </div>
       </div>
     </div>
+  </div>
+</body>
+    </div> 
   );
-  }; // This closing parenthesis was missing
+  }; 
   
   export default Cart;
   

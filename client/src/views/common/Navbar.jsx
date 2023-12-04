@@ -1,13 +1,37 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
-import dkjfjkdf from "../../assets/images/logg.png";
+import dkjfjkdf from '../../assets/images/logg.png'
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import api from "../../api";
 
 const socket = io.connect("http://localhost:3000");
 
 const Navbar = () => {
-
+  const {user, logout,getUser} = useUser();
+  const [userPanier, setUserPanier] = useState([]);
+  const navigate = useNavigate();
+  const handleLogout = async()=>{
+      let response = await logout();
+      if(response.status == 200){
+          getUser()
+          navigate("/");
+      }   
+  }
+  
+  useEffect(() => {
+    const getPanier = async () => {
+      try {
+        const response = await api.get('http://localhost:3000/api/cart/panier');
+        setUserPanier(response.data)
+        console.log(response);
+      } catch (error) {
+        console.error('Error getting Panier:', error.message);
+      }
+    };
+  
+    getPanier();
+  }, []);
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -64,20 +88,10 @@ const Navbar = () => {
 
   console.log(client1);
 
-  const { user, logout, getUser } = useUser();
-  const navigate = useNavigate();
-  const handleLogout = async () => {
-    let response = await logout();
-    if (response.status == 200) {
-      getUser();
-      navigate("/");
-    }
-  };
-
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-2xl  bg-opacity-100">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <img className="w-24" src={dkjfjkdf} alt="" srcset="" />
+        <img onClick={() => navigate('/menu')} className="w-24" src={dkjfjkdf} alt="" srcset="" />
         <button
           data-collapse-toggle="navbar-default"
           type="button"
@@ -126,11 +140,11 @@ const Navbar = () => {
             )}
 
             {user._id && user.role.name === "DeliveryMan" && (
-              <div class="relative inline-block text-left">
+              <div className="relative inline-block text-left">
                 <div>
                   <button
                     type="button"
-                    class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded="true"
                     aria-haspopup="true"
@@ -138,7 +152,7 @@ const Navbar = () => {
                   >
                     Notification
                     <svg
-                      class="-mr-1 h-5 w-5 text-gray-400"
+                      className="-mr-1 h-5 w-5 text-gray-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
@@ -151,7 +165,7 @@ const Navbar = () => {
                     </svg>
                   </button>
                   <div
-                    class={
+                    className={
                       notification.message == ""
                         ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white"
                         : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"
@@ -162,17 +176,17 @@ const Navbar = () => {
                 </div>
                 {isDropdownOpen && (
                   <div
-                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"
                     tabindex="-1"
                     onClick={handleDropdownClick}
                   >
-                    <div class="py-1" role="none">
+                    <div className="py-1" role="none">
                       <a
                         href="#"
-                        class="text-gray-700 block px-4 py-2 text-sm"
+                        className="text-gray-700 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabindex="-1"
                         id="menu-item-0"
@@ -186,11 +200,11 @@ const Navbar = () => {
             )}
 
             {user._id && user.role.name === "Manager" && (
-              <div class="relative inline-block text-left">
+              <div className="relative inline-block text-left">
                 <div>
                   <button
                     type="button"
-                    class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded="true"
                     aria-haspopup="true"
@@ -198,7 +212,7 @@ const Navbar = () => {
                   >
                     Notification
                     <svg
-                      class="-mr-1 h-5 w-5 text-gray-400"
+                      className="-mr-1 h-5 w-5 text-gray-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
@@ -211,7 +225,7 @@ const Navbar = () => {
                     </svg>
                   </button>
                   <div
-                    class={
+                    className={
                       notificationDelivery.message == ""
                         ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white"
                         : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"
@@ -222,17 +236,17 @@ const Navbar = () => {
                 </div>
                 {isDropdownOpen && (
                   <div
-                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"
                     tabindex="-1"
                     onClick={handleDropdownClick}
                   >
-                    <div class="py-1" role="none">
+                    <div className="py-1" role="none">
                       <a
                         href="#"
-                        class="text-gray-700 block px-4 py-2 text-sm"
+                        className="text-gray-700 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabindex="-1"
                         id="menu-item-0"
