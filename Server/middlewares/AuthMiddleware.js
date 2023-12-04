@@ -44,7 +44,7 @@ async function verifyLocalToken(req, res, next) {
       secure: true,
       sameSite: "Strict",
     });
-
+    console.log(user);
     req.user = user;
     return next();
   } catch (err) {

@@ -3,14 +3,32 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendEMail } = require("../utils/emailSender");
 const { emailVerificationMessage } = require("../utils/messagesGenerator");
-
+const Command = require("../models/Command");
+const Role = require("../models/Role");
+const Article = require("../models/Article");
 class AuthController {
   static async me(req, res) {
     let email = req.user.email;
-    const user = await User.findOne({ email }).populate({
-      path: "role",
-      select: "name",
-    });
+    const user = await User.findOne({ email })
+      .select("-password")
+      .populate({
+        path: "role",
+        model:'Role',
+        select: "name",
+      });
+      if (user.role.name === "Client") {
+        try{
+          const commands = await Command.find({ client: user._id })
+          .populate({
+            path: "articles._id",
+            model: "Article",
+            select: "Plat prix description",
+          });
+          return res.status(200).json({user,commands})
+        }catch(error){
+          console.log(error);
+        }
+      }
     return res.status(200).json({ user });
   }
 

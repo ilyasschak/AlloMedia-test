@@ -3,7 +3,7 @@
 @import url('leaflet/dist/leaflet.css');
 
 .leaflet-container{
-  height: 600px;
+  height: 500px;
   width: 100%;
 }
 
@@ -16,18 +16,20 @@
 *{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   font-family: 'Urbanist', sans-serif;
 }
 #root{
-  /* background-image: url(./assets/images/pexels-norma-mortenson-4392030.jpg); */
+  background-image: url(./assets/images/liv2.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   height: 100vh;
   width: 100vw;
 }
-
+.leaflet-top{
+  /* display:  none !important; */
+}
 nav button {
   width: max-content !important;
 }
@@ -131,7 +133,7 @@ input[type='password'] {
   font-family: Verdana;
 }
 .Client.checked-client, .DeliveryMan.checked-delivery{
-  background-color: #00CA7D !important;
+  background-color: brown;
   color: white !important;
 }
 ::-webkit-scrollbar{
