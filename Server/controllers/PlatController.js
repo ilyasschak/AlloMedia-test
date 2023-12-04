@@ -5,7 +5,7 @@ const fetchPlat = async (req, res) => {
     const { id } = req.params;
         console.log(req.params);
     try {
-      const plat = await Plat.findOne({ menu: id });
+      const plat = await Plat.find({ menu: id });
   
       if (!plat) {
         return res.status(404).json({ error: 'Plat not found' });

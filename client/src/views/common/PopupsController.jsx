@@ -3,7 +3,7 @@
 import { Button, Modal } from 'flowbite-react';
 import { useState } from 'react';
 
-export default function PopupsController({showModal, closeModal, bodyContent, headerContent}) {
+export default function PopupsController({showModal, closeModal, bodyContent, headerContent, footerContent}) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -15,6 +15,13 @@ export default function PopupsController({showModal, closeModal, bodyContent, he
           { bodyContent }
           </div>
         </Modal.Body>
+        {footerContent !== "" &&
+          <Modal.Footer>
+            <div className="space-y-6 w-full">
+            { footerContent }
+            </div>
+          </Modal.Footer>
+        }
       </Modal>
     </>
   );

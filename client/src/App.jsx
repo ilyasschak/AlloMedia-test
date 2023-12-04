@@ -23,13 +23,15 @@ import EmailVerified from "./views/pages/EmailVerified";
 import SearchRestaurant from "./views/pages/restaurant/SearchRestaurant.jsx";
 import RestaurantsMap from "./views/pages/restaurant/RestaurantsMap.jsx";
 import PopupsController from "./views/common/PopupsController.jsx";
-import Menu from "./components/menu/menu";
+import MyMenu from "./components/menu/MyMenu.jsx";
 import Cart from "./components/panier/panier";
 import Plats from "./components/articles/plat.jsx"
 import Livreur from "./views/Dashboard/Livreur";
 import Manager from "./views/Dashboard/Manager";
 import Order from "./views/Dashboard/Order";
 import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
+import AddMenu from "./components/menu/addMenu.jsx";
+import UpdateMenu from "./components/menu/UpdateMenu.jsx";
 
 function App() {
   const {user} = useUser();
@@ -51,10 +53,12 @@ function App() {
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/restaurants/:restaurant_id" element={<RestaurantPage/>} />
         <Route path="/get-users" element={<LiveCoding/>}/>
-        <Route path="/menu" element={<Menu/>}/>
+        <Route path ="/addMenu" element={<AddMenu/>}/> 
+        <Route path="/myMenu" element={<MyMenu/>}/>
+        <Route path="/menu/:id" element = {<UpdateMenu/>} />
         <Route path="/plats/:id" element={<Plats/>}/>
       </Route>
-      <Route path="/menu" element={<Menu/>}/>
+      {/* <Route path="/menu" element={<Menu/>}/> */}
       <Route path="/cart" element={<Cart/>}/>
 
         <Route path="/Dashboard/livreur" element={<Livreur/>}/>

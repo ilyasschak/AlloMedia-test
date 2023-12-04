@@ -69,6 +69,7 @@ export default function SearchRestaurant(){
                                 closeModal={closeModal} 
                                 bodyContent={<RestaurantsMap/>} 
                                 headerContent={"Choose a Restaurant on Map"}
+                                footerContent ={""}
                             />
                         </div>
 

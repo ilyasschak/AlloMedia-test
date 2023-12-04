@@ -63,6 +63,14 @@ class RestaurantController{
         });
 
     }
+
+    static async getRestaurantByOwner(req, res){
+      const {owner_id} = req.body;
+      console.log(owner_id);
+      const restaurantResult = await restaurant.find({'owner' : owner_id});
+
+      res.send(restaurantResult);
+    }
 }
 
 module.exports = RestaurantController;
