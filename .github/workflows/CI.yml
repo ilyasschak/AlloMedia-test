@@ -40,7 +40,12 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
-
+          
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18
+            
         - name: Run server tests
           working-directory: Server
           run: |
