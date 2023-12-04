@@ -53,7 +53,7 @@ function App() {
         <Route path="/map" element={<RestaurantsMap/>}/>
         <Route path="/popup" element={<PopupsController/>}/>
         <Route path="/restaurants/:restaurant_id" element={<RestaurantPage/>} />
-        <Route path="/get-users" element={<LiveCoding/>}/>
+        {/* <Route path="/get-users" element={<LiveCoding/>}/> */}
         <Route path ="/addMenu" element={<AddMenu/>}/> 
         <Route path="/myMenu" element={<MyMenu/>}/>
         <Route path="/menu/:id" element = {<UpdateMenu/>} />
