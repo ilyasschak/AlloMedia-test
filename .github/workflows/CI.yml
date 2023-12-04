@@ -26,7 +26,6 @@ jobs:
       working-directory: Server
       run: |
         npm install
-        npm install --save-dev jest
   
     - name: Install client dependencies
       working-directory: client
