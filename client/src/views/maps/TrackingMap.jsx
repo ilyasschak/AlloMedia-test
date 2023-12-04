@@ -25,25 +25,28 @@ const MapMovingTracker = ({position})=>{
   
   return null;
 }
-const TrackingMap = () => {
+const TrackingMap = ({orderToTrack}) => {
   const [position, setPosition] = useState([]);
-  const [position2, setPosition2] = useState([]);
 
   const successCallback = (newPosition) => {
     setPosition([newPosition.coords.latitude, newPosition.coords.longitude]);
-    setPosition2([newPosition.coords.latitude, newPosition.coords.longitude]);
-    // setInterval(()=>{
-    //   setPosition((prevPosition) => [
-    //     prevPosition[0] + 0.00020,
-    //     prevPosition[1] + 0.00020,
-    //   ])
-    // },200)
   };
-
-  // const [message, setMessage] = useState("");
-  // const [messages, setMessages] = useState([]);
+  let socket;
+  useEffect(() => {
+    socket = io.connect("http://localhost:3000",{
+      query : {
+        orderId : orderToTrack
+      }
+    });
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  }, []);
 
   useEffect(() => {
+    // const socket = io.connect("http://localhost:3000",{
+    //   query : {
+    //     orderId : orderToTrack
+    //   }
+    // });
     socket.on("positionChanged", (data) => {
       console.log(data);
       setPosition(data)
@@ -51,16 +54,14 @@ const TrackingMap = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
 
   const errorCallback = (error) => {
     console.log(error);
   };
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-  }, []);
+  
 
   return (
     <div style={{ width: "100%", height: "100%" }}>

@@ -1,7 +1,8 @@
 class PositionController {
   static async setDeliveryPosition(req, res,io) {
-    io.emit("positionChanged", req.body.position);
-    console.log(req.body.position);
+    
+    io.to(req.body.orderId).emit("positionChanged", req.body.position);
+    console.log(req.body);
   }
 }
 module.exports = PositionController;
