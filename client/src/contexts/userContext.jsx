@@ -1,7 +1,5 @@
 import { createContext, useState, useContext } from "react";
 import api from "../api";
-import { data } from "autoprefixer";
-import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -10,11 +8,12 @@ export function UserProvider({ children }) {
   const [newPasswords, setNewPasswords] = useState({});
   const [token, setToken] = useState(null);
   const [message, setMessage] = useState("");
+  const [commands, setCommands] = useState([]);
 
   const register = async () => {
     let response;
     try {
-      console.log(user, "from register");
+      console.log(user);
       response = await api.post("/auth/register", user);
       console.log(response);
     } catch (error) {
@@ -29,15 +28,16 @@ export function UserProvider({ children }) {
     try {
       response = await api.get("/auth/me");
       if (response.data.user) {
-        console.log("hii");
         setUser(response.data.user);
       } else {
         setUser({});
       }
+      if (response.data.commands) {
+        setCommands(response.data.commands);
+      }
     } catch (error) {
       if (error.response.status == 401) {
         setUser({});
-        console.log(error.response.data);
         console.log("should login");
       }
     }
@@ -68,9 +68,7 @@ export function UserProvider({ children }) {
   const forgetPassword = async () => {
     let response;
     try {
-      console.log(user.email);
       response = await api.post("/auth/forgetPassword", { email: user.email });
-      console.log(response);
       if (response.status == 200) setMessage(response.data.message);
     } catch (error) {
       console.log(error);
@@ -81,9 +79,7 @@ export function UserProvider({ children }) {
   const resetPassword = async () => {
     let response;
     try {
-      console.log(newPasswords);
       response = await api.post(`/auth/resetPassword?token=${token}`, newPasswords);
-      console.log(response);
       if (response.status == 200) setMessage(response.data.message);
     } catch (error) {
       console.log(error);
@@ -123,6 +119,7 @@ export function UserProvider({ children }) {
       value={{
         user,
         message,
+        commands,
         setUser,
         register,
         getUser,

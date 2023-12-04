@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -12,7 +11,6 @@ const {Server} = require('socket.io');
 const http = require('http');
 
 const server = http.createServer(app);
-
 
 app.use(cors({
     origin : "http://localhost:5173",
@@ -36,7 +34,6 @@ const io = new Server(server, {
 // })
 io.on("connection", socketHandler)
 
-
 require('dotenv').config()
 require('./config/dbConfig')();
 
@@ -56,6 +53,7 @@ app.use('/api/menu', require('./routes/MenuRoutes'));
 app.use('/api/menu', require('./routes/PlatRoutes'));
 app.use('/api/panier', require('./routes/PanierRoutes'));
 app.use('/api/cart', require('./routes/PanierRoutes'));
+app.use('/api/tracking', require('./routes/TrackingRoutes')(io));
 
 app.use('/api/orders', require('./routes/OrderRoutes'));
 
