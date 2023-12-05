@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install server dependencies
+      working-directory: Server
+      run: |
+        npm install
+  
+    - name: Install client dependencies
+      working-directory: client
+      run: |
+        npm install
+        
+  test:
+      needs: build
+      runs-on: windows-latest
+  
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+          
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18
+            
+        - name: Run server tests
+          working-directory: Server
+          run: |
+            npm install
+            npm run test
