@@ -22,8 +22,8 @@ const Command = () => {
   }, []); 
 
   return (
-  <div className='p-20 bg-blue-100'>
-    <h2 className='text-blue-300 mb-4 text-lg font-bold'>Your Commands</h2>
+  <div className='p-20 '>
+    <h2 className=' mb-4 text-lg font-bold'>Your Commands</h2>
     {commands && commands.length && (
       <div className='gap-12 flex flex-col '>
         {commands.map((command) => (
