@@ -49,6 +49,7 @@ function App() {
             element={!user._id ? <SignUp /> : <Navigate to={"/me"} />}
           />
           <Route path="/registerSuccess" element={<RegisterSuccess />} />
+          <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route
             path="/me"
             element={
@@ -61,7 +62,6 @@ function App() {
               )
             }
           />
-          <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route path="/verified" element={<EmailVerified />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
