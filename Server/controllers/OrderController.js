@@ -23,13 +23,14 @@ class OrderController {
 
       
         
-        res.json({ success: true,
+        return res.status(200).json({ success: true,
             orders: orders
            
 
         })
 
     }
+
 
 
 

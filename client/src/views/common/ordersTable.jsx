@@ -1,43 +1,45 @@
-import { useEffect, useState } from "react"
-// import MapModal from "./MapModal";
-import { useUser } from "../../contexts/userContext"
-import api from "../../api"
+import { useEffect, useState } from "react";
+import MapModal from "./MapModal";
+import { useUser } from "../../contexts/userContext";
+import api from "../../api";
 import { io } from "socket.io-client";
 const socket = io.connect("http://localhost:3000");
-import {useOrders} from "../../contexts/orderContext";
+import { useOrders } from "../../contexts/orderContext";
 
-const OrdersTable = ({orders, role}) => {
-
+const OrdersTable = ({ orders, role, toggleMap }) => {
   const { confirmOrder, comfirmOrderFromDelivery, deletOrder } = useOrders();
 
-  const calculateThePrice = articles => {
+  const calculateThePrice = (articles) => {
     let count = 0;
-    articles.forEach(article =>{
-        count+= article._id.prix * article.quantite
-    })
-    return count 
-  }
-  const {user , sendVerification,getUser} = useUser(); 
-  
-  function handelComfirmOrder(id){
+    articles.forEach((article) => {
+      count += article._id.prix * article.quantite;
+    });
+    return count;
+  };
+  const { user, sendVerification, getUser } = useUser();
+
+  function handelComfirmOrder(id) {
     confirmOrder(id);
   }
-   function handelcomfirmOrderFromDelivery(id) {
-     comfirmOrderFromDelivery(id);
-   }
+  function handelcomfirmOrderFromDelivery(id) {
+    comfirmOrderFromDelivery(id);
+  }
 
-    function handeldeletOrder(id) {
-      deletOrder(id);
-    }
-
-
- 
+  function handeldeletOrder(id) {
+    deletOrder(id);
+  }
 
   return (
-    <div className="w-3/4">
+    <div className={user.role.name == "Client" ? "w-full" : "w-3/4"}>
       {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/> */}
       <div className="flex flex-wrap -mx-3 mb-5 justify-center ">
-        <div className=" px-3 mb-6  mx-auto">
+        <div
+          className={
+            user.role.name == "Client"
+              ? "px-3 mb-6  mx-auto w-3/4"
+              : "px-3 mb-6  mx-auto"
+          }
+        >
           <div className=" relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
             <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
               <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
@@ -73,12 +75,13 @@ const OrdersTable = ({orders, role}) => {
                           ARTICLES
                         </th>
                         <th className="pb-3 text-end min-w-[100px]">Owner</th>
-                        {role == "DeliveryMan" ||
-                          (role == "Manager" && (
-                            <th className="pb-3 text-end min-w-[100px]">
-                              Phone number
-                            </th>
-                          ))}
+                        {role == "DeliveryMan" || role == "Manager" ? (
+                          <th className="pb-3 text-end min-w-[100px]">
+                            Phone number
+                          </th>
+                        ) : (
+                          ""
+                        )}
                         <th className="pb-3 text-end min-w-[100px]">
                           TOTAL PRICE
                         </th>
@@ -127,16 +130,17 @@ const OrdersTable = ({orders, role}) => {
                             </span>
                           </td>
 
-                          {role == "DeliveryMan" ||
-                            (role == "Manager" && (
-                              <td className="p-3 pr-0 text-end">
-                                <span className="font-semibold text-light-inverse text-md/normal">
-                                  {order.client
-                                    ? order.client.phone_number
-                                    : "no number"}
-                                </span>
-                              </td>
-                            ))}
+                          {role == "DeliveryMan" || role == "Manager" ? (
+                            <td className="p-3 pr-0 text-end">
+                              <span className="font-semibold text-light-inverse text-md/normal">
+                                {order.client
+                                  ? order.client.phone_number
+                                  : "no number"}
+                              </span>
+                            </td>
+                          ) : (
+                            ""
+                          )}
                           <td className="p-3 pr-0 text-end">
                             {calculateThePrice(order.articles)}
                           </td>
@@ -167,7 +171,7 @@ const OrdersTable = ({orders, role}) => {
                             <td className="p-3 pr-0 gap-3 text-end flex justify-end">
                               <button
                                 onClick={() => {
-                                  setMapOpen(true);
+                                  toggleMap(order._id);
                                 }}
                                 className="text-gray-400 bg-gray-100 hover:text-blue-800 focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 text-center"
                               >
@@ -235,6 +239,6 @@ const OrdersTable = ({orders, role}) => {
       </div>
     </div>
   );
-}
+};
 
-export default OrdersTable
+export default OrdersTable;
