@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="logo" width="395" src="https://image.noelshack.com/fichiers/2023/49/2/1701764834-logg.png">
+</p>
+
 # Cloner et Exécuter le Dépôt AlloMedia
 
 Dans ce README, nous vous guiderons à travers le processus de clonage du dépôt AlloMedia, qui est une application de services de livraison. Nous vous montrerons également comment le configurer et exécuter le serveur et la base de données. Commençons !
