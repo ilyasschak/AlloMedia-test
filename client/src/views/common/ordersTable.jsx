@@ -30,7 +30,7 @@ const OrdersTable = ({ orders, role, toggleMap }) => {
   function handeldeletOrder(id) {
     deletOrder(id);
   }
-
+  
   return (
     <div className={user.role.name == "Client" ? "w-full" : "w-3/4"}>
       {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/> */}
