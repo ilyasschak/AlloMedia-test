@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import MapModal from "./MapModal";
 import { useUser } from "../../contexts/userContext";
 import api from "../../api";
