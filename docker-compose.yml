@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  server:
+    build: 
+      context: ./Server
+      dockerfile: Dockerfile
+    image: image-server 
+    container_name: server
+    ports:
+      - "3000:3000"
+    working_dir: /usr/src/app
+    command: ["npm", "run", "dev"]
+    volumes:
+      - ./Server:/usr/src/app
+      - /usr/src/app/node_modules
+
+
+  client:
+    build: 
+        context: ./client
+        dockerfile: Dockerfile
+    image: image-client 
+    container_name: client
+    ports:
+      - "5173:5173"
+    working_dir: /usr/src/app
+    command: ["npm", "run", "dev"]
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
