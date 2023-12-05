@@ -46,7 +46,7 @@ const Profile = () => {
   return (
     <div className="flex">
       {(user.verified && user.role.name == "DeliveryMan") ||
-      (user.verified && user.role.name == "Manager") ? (
+      (user.verified && user.role.name == "Manager")  ? (
         <Sidebar />
       ) : (
         ""
