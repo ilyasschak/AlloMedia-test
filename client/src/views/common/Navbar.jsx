@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
-import dkjfjkdf from '../../assets/images/logg.png'
+import dkjfjkdf from "../../assets/images/logg.png";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import api from "../../api";
@@ -8,42 +8,41 @@ import api from "../../api";
 const socket = io.connect("http://localhost:3000");
 
 const Navbar = () => {
-  const {user, logout,getUser} = useUser();
+  const {user, logout,getUser, commands} = useUser();
   const [userPanier, setUserPanier] = useState([]);
   const navigate = useNavigate();
-  const handleLogout = async()=>{
-      let response = await logout();
-      if(response.status == 200){
-          getUser()
-          navigate("/");
-      }   
-  }
-  
+  const handleLogout = async () => {
+    let response = await logout();
+    if (response.status == 200) {
+      getUser();
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
+    getUser();
     const getPanier = async () => {
       try {
-        const response = await api.get('http://localhost:3000/api/cart/panier');
-        setUserPanier(response.data)
+        const response = await api.get("http://localhost:3000/api/cart/panier");
+        setUserPanier(response.data);
         console.log(response);
       } catch (error) {
-        console.error('Error getting Panier:', error.message);
+        console.error("Error getting Panier:", error.message);
       }
     };
-  
+
     getPanier();
   }, []);
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const handleButtonClick = () => {
-      
-      setIsDropdownOpen(!isDropdownOpen);
-    };
+  const handleButtonClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-     const handleDropdownClick = () => {
-       
-       window.location.reload();
-     };
+  const handleDropdownClick = () => {
+    window.location.reload();
+  };
 
   const [notification, setNotification] = useState({
     message: "",
@@ -91,7 +90,13 @@ const Navbar = () => {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-2xl  bg-opacity-100">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <img onClick={() => navigate('/myMenu')} className="w-24" src={dkjfjkdf} alt="" srcset="" />
+        <img
+          onClick={() => navigate("/myMenu")}
+          className="w-24"
+          src={dkjfjkdf}
+          alt=""
+          srcset=""
+        />
         <button
           data-collapse-toggle="navbar-default"
           type="button"
@@ -137,6 +142,45 @@ const Navbar = () => {
                   Sign Up
                 </button>
               </NavLink>
+            )}
+
+            {user._id && user.role.name === "Client" && (
+              <div className="relative inline-block text-left">
+                <div>
+                  <NavLink to={"/me"}>
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      id="menu-button"
+                      aria-expanded="true"
+                      aria-haspopup="true"
+                    >
+                      Orders
+                      <svg
+                        className="-mr-1 h-5 w-5 text-gray-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </NavLink>
+                  <div
+                    className={
+                      notification.message == ""
+                        ? "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white"
+                        : "absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-neutral-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white bg-red-600"
+                    }
+                  >
+                    {commands.length}
+                  </div>
+                </div>
+              </div>
             )}
 
             {user._id && user.role.name === "DeliveryMan" && (

@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-// require("../config/dbConfig")();
 
 app.use(cookieParser());
 app.use(express.json());

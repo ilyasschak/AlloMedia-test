@@ -4,7 +4,7 @@ const typeCuisine = require('../models/TypeCuisine');
 
 class RestaurantController{
     static async getAllRestaurants(req, res){
-        await restaurant.find({}).then(function(restaurants){
+        await restaurant.find({}).populate('typeCuisine').then(function(restaurants){
             res.send(restaurants);
         })
     }

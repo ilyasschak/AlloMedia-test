@@ -5,147 +5,124 @@ const socket = io.connect("http://localhost:3000");
 
 const orderContext = createContext();
 
+export function OrderProvider({ children }) {
+  const [orders, setOrders] = useState([]);
+  const [Allorders, setAllOrders] = useState([]);
 
-export function OrderProvider({children}){
+  const [orderComfirmed, setorderComfirmed] = useState("");
+  const [orderComfirmed2, setorderComfirmed2] = useState("");
 
-      const [orders, setOrders] = useState([]);
-      const [Allorders, setAllOrders] = useState([]);
+  const [delete1, setdelete] = useState("");
 
-      
-      const [orderComfirmed, setorderComfirmed]=useState("");
-      const [orderComfirmed2, setorderComfirmed2] = useState("");
+  const showOrders = async () => {
+    try {
+      const url = `/orders/show`;
 
-       const [delete1, setdelete] = useState("");
-      
+      const response = await api.get(url);
 
+      console.log(response.data);
 
-     const showOrders = async () => {
-       try {
-         const url = `/orders/show`;
+      setAllOrders(response.data.orders);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-         const response = await api.get(url);
+  const showComfirmOrdersToDelivery = async () => {
+    try {
+      const url = `/orders/showComfirmOrdersToDelivery`;
+      const response = await api.get(url);
 
-         console.log(response.data);
+      console.log(response);
 
-         setAllOrders(response.data.orders);
-       } catch (error) {
-         console.error(error);
-       }
-     };
+      setOrders(response.data.comfirmedOrders);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-        const showComfirmOrdersToDelivery = async () => {
-           try {
-             const url = `/orders/showComfirmOrdersToDelivery`;
-             const response = await api.get(url);
+  const confirmOrder = async (id) => {
+    try {
+      const url = `/orders/comfirm?id=${id}`;
+      const response = await api.get(url);
 
-             console.log(response);
+      console.log(response.data.OrderComfirmed);
 
-             setOrders(response.data.comfirmedOrders);
-           } catch (err) {
-             console.log(err);
-           }
-         };
+      const orderComfirmed = response.data.OrderComfirmed;
 
+      console.log(orderComfirmed.client.full_name);
 
+      orderComfirmed.articles.map((article) =>
+        console.log(article._id.Plat, article._id.prix)
+      );
 
+      socket.emit("nouvelle-commande", { orderComfirmed });
 
-          const confirmOrder = async (id) => {
-            try {
-              const url = `/orders/comfirm?id=${id}`;
-              const response = await api.get(url);
+      setorderComfirmed(orderComfirmed);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-              console.log(response.data.OrderComfirmed);
+  const comfirmOrderFromDelivery = async (id) => {
+    try {
+      const url = `/orders/comfirmOrderFromDelivery?id=${id}`;
+      const response = await api.get(url);
 
-              const orderComfirmed = response.data.OrderComfirmed;
+      console.log(response.data.OrderComfirmed);
 
-              
-              
-              console.log(orderComfirmed.client.full_name);
+      const orderComfirmed = response.data.OrderComfirmed;
 
-              orderComfirmed.articles.map((article) =>
-                console.log(article._id.Plat, article._id.prix)
-              );
+      console.log(orderComfirmed.client.full_name);
 
-             
+      //   orderComfirmed.articles.map((article) =>
+      //     console.log(article._id.Plat, article._id.prix)
+      //   );
+      socket.emit("recieved notification from delivery", { orderComfirmed });
 
-              socket.emit("nouvelle-commande", { orderComfirmed });
+      setorderComfirmed2(orderComfirmed);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-              setorderComfirmed(orderComfirmed);
-            } catch (err) {
-              console.log(err);
-            }
-          };
+  const deletOrder = async (id) => {
+    try {
+      const url = `/orders/deleteOrder?id=${id}`;
+      const response = await api.get(url);
 
-          const comfirmOrderFromDelivery = async (id) => {
-            try {
-              const url = `/orders/comfirmOrderFromDelivery?id=${id}`;
-              const response = await api.get(url);
+      setdelete(response.data);
 
-              console.log(response.data.OrderComfirmed);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-              const orderComfirmed = response.data.OrderComfirmed;
-
-              console.log(orderComfirmed.client.full_name);
-
-             
-
-            //   orderComfirmed.articles.map((article) =>
-            //     console.log(article._id.Plat, article._id.prix)
-            //   );
-              socket.emit("recieved notification from delivery", { orderComfirmed });
-
-               setorderComfirmed2(orderComfirmed);
-            } catch (err) {
-              console.log(err);
-            }
-          };
-
-          const deletOrder = async (id) => {
-            try {
-              const url = `/orders/deleteOrder?id=${id}`;
-              const response = await api.get(url);
-
-              setdelete(response.data);
-
-              console.log(response);
-            } catch (err) {
-              console.log(err);
-            }
-          };
-
-         
-
-    return (
-      <orderContext.Provider
-        value={{
-          deletOrder,
-          comfirmOrderFromDelivery,
-          confirmOrder,
-          showComfirmOrdersToDelivery,
-          showOrders,
-          setAllOrders,
-          Allorders,
-          setOrders,
-          orders,
-          orderComfirmed,
-          orderComfirmed2,
-          delete1,
-        }}
-      >
-        {children}
-      </orderContext.Provider>
-    );
-
- 
-
-
+  return (
+    <orderContext.Provider
+      value={{
+        deletOrder,
+        comfirmOrderFromDelivery,
+        confirmOrder,
+        showComfirmOrdersToDelivery,
+        showOrders,
+        setAllOrders,
+        Allorders,
+        setOrders,
+        orders,
+        orderComfirmed,
+        orderComfirmed2,
+        delete1,
+      }}
+    >
+      {children}
+    </orderContext.Provider>
+  );
 }
 
-   export function useOrders() {
+export function useOrders() {
+  const context = useContext(orderContext);
 
-    const context = useContext(orderContext);
-
-    return context;
-
-
-   }
+  return context;
+}
