@@ -91,7 +91,7 @@ const Navbar = () => {
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-2xl  bg-opacity-100">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <img
-          onClick={() => navigate("/myMenu")}
+          onClick={() => navigate("/")}
           className="w-24"
           src={dkjfjkdf}
           alt=""

@@ -6,6 +6,8 @@ import OrdersTable from "../common/OrdersTable";
 const socket = io.connect("http://localhost:3000");
 import api from "../../api";
 import { useOrders } from "../../contexts/orderContext";
+import "../../assets/styles/manager.css";
+import liv from "../../assets/images/liv2.jpg";
 
 const Profile = () => {
   const {
@@ -40,7 +42,8 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex  relative w-full ">
+      <img src={liv} className=" absolute top-0 left-0 w-full h-full z-[-1]" />
       {(user.verified && user.role.name == "DeliveryMan") ||
       (user.verified && user.role.name == "Manager") ? (
         <Sidebar />
