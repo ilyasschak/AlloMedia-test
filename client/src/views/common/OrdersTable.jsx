@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import MapModal from "./MapModal";
 import { useUser } from "../../contexts/userContext";
 import api from "../../api";
@@ -30,9 +30,11 @@ const OrdersTable = ({ orders, role, toggleMap }) => {
   function handeldeletOrder(id) {
     deletOrder(id);
   }
-  
+
   return (
-    <div className={user.role.name == "Client" ? "w-full" : "w-3/4"}>
+    <div
+      className={user.role.name == "Client" ? "w-full" : "w-full"}
+    >
       {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"/> */}
       <div className="flex flex-wrap -mx-3 mb-5 justify-center ">
         <div
@@ -42,20 +44,27 @@ const OrdersTable = ({ orders, role, toggleMap }) => {
               : "px-3 mb-6  mx-auto"
           }
         >
-          <div className=" relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
+          <div className=" relative flex-[1_auto] flex flex-col break-words  bg-clip-border rounded-[.95rem] bg-white m-5">
             <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
-         
               <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
                 <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                   <span className="mr-3 font-semibold text-dark">Orders</span>
-                  {role == "manager" && <span className="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders from our clients</span>}
-                  {role == "client" && <span className="mt-1 font-medium text-secondary-dark text-lg/normal">All Orders i have made</span>}
+                  {role == "manager" && (
+                    <span className="mt-1 font-medium text-secondary-dark text-lg/normal">
+                      All Orders from our clients
+                    </span>
+                  )}
+                  {role == "client" && (
+                    <span className="mt-1 font-medium text-secondary-dark text-lg/normal">
+                      All Orders i have made
+                    </span>
+                  )}
                 </h3>
                 {/* <div className="relative flex flex-wrap items-center my-2">
                   <a href="javascript:void(0)" className="inline-block text-[.925rem] font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-150 ease-in-out text-light-inverse bg-light-dark border-light shadow-none border-0 py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light"> See other projects </a>
                 </div> */}
               </div>
-           
+
               <div className="flex-auto block py-8 pt-6 px-9">
                 <div className="overflow-x-auto">
                   <table className="w-full my-0 align-middle text-dark border-neutral-200">

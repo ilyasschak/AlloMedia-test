@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useUser } from "../contexts/userContext";
 
 const RootLayout = () => {
-    let {getUser} = useUser();
-    useEffect(()=>{
-      getUser();
-    },[])
+  let { getUser } = useUser();
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
-    <main className="landing-page  h-full w-full flex flex-col overflow-scroll">
+    <main className="landing-page    h-full w-full flex flex-col overflow-scroll overflow-x-hidden">
       <Navbar />
       <Outlet />
     </main>

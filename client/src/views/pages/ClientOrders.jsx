@@ -10,11 +10,10 @@ const ClientOrders = () => {
   const handleMapToggle = (id = null) => {
     console.log(id);
     if (id != orderToTrack) {
-      setOrderToTrack(id)
+      setOrderToTrack(id);
       setMapOpen(true);
-    }
-    else{
-      setOrderToTrack(null)
+    } else {
+      setOrderToTrack(null);
       setMapOpen(false);
     }
   };
