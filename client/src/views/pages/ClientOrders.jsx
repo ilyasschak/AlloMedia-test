@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useUser } from "../../contexts/userContext";
 import MapModal from "../common/MapModal";
-import OrdersTable from "../common/OrdersTable";
+// import OrdersTable from "../common/OrdersTable";
+import OrdersTable from "../common/ordersTable";
 
 const ClientOrders = () => {
   const [mapOpen, setMapOpen] = useState(false);

@@ -27,7 +27,7 @@ import Cart from "./components/panier/panier";
 import Plats from "./components/articles/plat.jsx"
 import Command from "./components/command/command.jsx";
 import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
-import AddMenu from "./components/menu/addMenu.jsx";
+import AddMenu from "./components/menu/AddMenu.jsx";
 import UpdateMenu from "./components/menu/UpdateMenu.jsx";
 import ClientOrders from "./views/pages/ClientOrders";
 import TrackingMap from "./views/maps/TrackingMap.jsx";

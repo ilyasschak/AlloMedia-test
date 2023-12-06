@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import OrdersTable from "../common/ordersTable";
 const socket = io.connect("http://localhost:3000");
 import api from "../../api";
-import {useOrders} from "../../contexts/orderContext"
+import { useOrders } from "../../contexts/orderContext";
 
 const Profile = () => {
   const {
@@ -18,17 +18,13 @@ const Profile = () => {
     deletOrder,
     orderComfirmed,
     orderComfirmed2,
-    delete1
+    delete1,
   } = useOrders();
 
- 
-
-
-
-    useEffect(() => {
-      showComfirmOrdersToDelivery();
-      showOrders();
-    }, [orderComfirmed2, orderComfirmed, delete1]);
+  useEffect(() => {
+    showComfirmOrdersToDelivery();
+    showOrders();
+  }, [orderComfirmed2, orderComfirmed, delete1]);
 
   const { user, sendVerification, getUser } = useUser();
   const [verificationSent, setVerificationSent] = useState(false);
@@ -46,7 +42,7 @@ const Profile = () => {
   return (
     <div className="flex">
       {(user.verified && user.role.name == "DeliveryMan") ||
-      (user.verified && user.role.name == "Manager")  ? (
+      (user.verified && user.role.name == "Manager") ? (
         <Sidebar />
       ) : (
         ""
