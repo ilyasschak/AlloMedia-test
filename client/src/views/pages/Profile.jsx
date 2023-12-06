@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/userContext";
 import Sidebar from "../common/Sidebar";
 import io from "socket.io-client";
-import OrdersTable from "../common/ordersTable";
+import OrdersTable from "../common/OrdersTable";
 const socket = io.connect("http://localhost:3000");
 import api from "../../api";
 import { useOrders } from "../../contexts/orderContext";
