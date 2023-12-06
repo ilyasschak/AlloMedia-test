@@ -27,9 +27,10 @@ import Cart from "./components/panier/panier";
 import Plats from "./components/articles/plat.jsx"
 import Command from "./components/command/command.jsx";
 import RestaurantPage from "./views/pages/restaurant/RestaurantPage.jsx";
-import AddMenu from "./components/menu/addMenu.jsx";
+import AddMenu from "./components/menu/AddMenu.jsx";
 import UpdateMenu from "./components/menu/UpdateMenu.jsx";
 import ClientOrders from "./views/pages/ClientOrders";
+import AllRestaurants from "./views/pages/restaurant/AllRestaurants.jsx";
 import TrackingMap from "./views/maps/TrackingMap.jsx";
 import StartTracking from "./views/common/StartTracking.jsx";
 
@@ -72,6 +73,7 @@ function App() {
             path="/restaurants/:restaurant_id"
             element={<RestaurantPage />}
           />
+          <Route path="/restaurants" element={<AllRestaurants/>} />
           {/* <Route path="/get-users" element={<LiveCoding/>}/> */}
           <Route path="/addMenu" element={<AddMenu />} />
           <Route path="/myMenu" element={<MyMenu />} />

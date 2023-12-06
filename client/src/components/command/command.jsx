@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import api from '../../api';
-import  Navbar  from '../../views/common/Navbar';
-
+import { useState, useEffect } from "react";
+import api from "../../api";
+import Navbar from "../../views/common/Navbar";
 
 const Command = () => {
   const [commands, setCommands] = useState([]);
@@ -9,17 +8,17 @@ const Command = () => {
   useEffect(() => {
     const fetchCommands = async () => {
       try {
-        const response = await api.get('http://localhost:3000/api/Commands'); 
+        const response = await api.get("http://localhost:3000/api/Commands");
         const data = response.data;
-        console.log("data :" , data);
+        console.log("data :", data);
         setCommands(data);
       } catch (error) {
-        console.error('Error fetching commands:', error);
+        console.error("Error fetching commands:", error);
       }
     };
 
     fetchCommands();
-  }, []); 
+  }, []);
 
   return (
   <div className='p-20 '>

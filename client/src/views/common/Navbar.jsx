@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
-import dkjfjkdf from '../../assets/images/logg.png'
+import dkjfjkdf from "../../assets/images/logg.png";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import api from "../../api";
@@ -11,40 +11,38 @@ const Navbar = () => {
   const {user, logout,getUser, commands} = useUser();
   const [userPanier, setUserPanier] = useState([]);
   const navigate = useNavigate();
-  const handleLogout = async()=>{
-      let response = await logout();
-      if(response.status == 200){
-          getUser()
-          navigate("/");
-      }   
-  }
-  
+  const handleLogout = async () => {
+    let response = await logout();
+    if (response.status == 200) {
+      getUser();
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
     getUser();
     const getPanier = async () => {
       try {
-        const response = await api.get('http://localhost:3000/api/cart/panier');
-        setUserPanier(response.data)
+        const response = await api.get("http://localhost:3000/api/cart/panier");
+        setUserPanier(response.data);
         console.log(response);
       } catch (error) {
-        console.error('Error getting Panier:', error.message);
+        console.error("Error getting Panier:", error.message);
       }
     };
-  
+
     getPanier();
   }, []);
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const handleButtonClick = () => {
-      
-      setIsDropdownOpen(!isDropdownOpen);
-    };
+  const handleButtonClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-     const handleDropdownClick = () => {
-       
-       window.location.reload();
-     };
+  const handleDropdownClick = () => {
+    window.location.reload();
+  };
 
   const [notification, setNotification] = useState({
     message: "",
@@ -92,7 +90,13 @@ const Navbar = () => {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-2xl  bg-opacity-100">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <img onClick={() => navigate('/myMenu')} className="w-24" src={dkjfjkdf} alt="" srcset="" />
+        <img
+          onClick={() => navigate("/myMenu")}
+          className="w-24"
+          src={dkjfjkdf}
+          alt=""
+          srcset=""
+        />
         <button
           data-collapse-toggle="navbar-default"
           type="button"

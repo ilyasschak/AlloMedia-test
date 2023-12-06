@@ -14,18 +14,24 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:3000");
 
-import { MapContainer, Marker, TileLayer, useMap, useMapEvent, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  TileLayer,
+  useMap,
+  useMapEvent,
+  useMapEvents,
+} from "react-leaflet";
 
-
-const MapMovingTracker = ({position})=>{
+const MapMovingTracker = ({ position }) => {
   const map = useMap();
-  useEffect(()=>{
+  useEffect(() => {
     map.setView(position, map.getZoom());
-  },[map, position])
-  
+  }, [map, position]);
+
   return null;
-}
-const TrackingMap = ({orderToTrack}) => {
+};
+const TrackingMap = ({ orderToTrack }) => {
   const [position, setPosition] = useState([]);
 
   const successCallback = (newPosition) => {
@@ -33,10 +39,10 @@ const TrackingMap = ({orderToTrack}) => {
   };
   let socket;
   useEffect(() => {
-    socket = io.connect("http://localhost:3000",{
-      query : {
-        orderId : orderToTrack
-      }
+    socket = io.connect("http://localhost:3000", {
+      query: {
+        orderId: orderToTrack,
+      },
     });
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
   }, []);
@@ -49,23 +55,20 @@ const TrackingMap = ({orderToTrack}) => {
     // });
     socket.on("positionChanged", (data) => {
       console.log(data);
-      setPosition(data)
+      setPosition(data);
     });
     return () => {
       socket.disconnect();
     };
   }, [socket]);
 
-
   const errorCallback = (error) => {
     console.log(error);
   };
 
-  
-
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      {(position.length || position.lat)  && (
+      {(position.length || position.lat) && (
         <MapContainer
           center={position}
           zoom={16}
@@ -79,7 +82,6 @@ const TrackingMap = ({orderToTrack}) => {
           {/* <MapMovingTracker position={position}/> */}
           <Marker position={position}></Marker>
           {/* <Marker position={position2}></Marker> */}
-
         </MapContainer>
       )}
     </div>
