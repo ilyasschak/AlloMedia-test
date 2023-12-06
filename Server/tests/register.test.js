@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const Role = require("../models/Role");
 const User = require("../models/User");
 const app = express();
-// require("../config/dbConfig")();
 
 app.use(cookieParser());
 app.use(express.json());
@@ -91,27 +90,4 @@ describe("register function", () => {
     expect(response.statusCode).toBe(409);
     expect(response.body).toEqual({ message: "Email already token" });
   });
-
-  // it("should return a 201 response if User inserted", async () => {
-  //   Role.findOne = jest.fn().mockResolvedValue({});
-  //   User.findOne = jest.fn().mockResolvedValue(null);
-  //   User.save = jest.fn().mockResolvedValue(true);
-
-  //   const body = {
-  //     email,
-  //     full_name,
-  //     password: "password123",
-  //     password_confirmation: "password123",
-  //     phone_number,
-  //     address: "123 Main St",
-  //     role: "Client",
-  //   };
-  //   const response = await request(app).post("/auth/register").send(body);
-
-  //   expect(response.statusCode).toBe(201);
-  //   expect(response.body).toMatchObject({
-  //     message: "User has been added",
-  //     user: expect.any(Object),
-  //   });
-  // });
 });
