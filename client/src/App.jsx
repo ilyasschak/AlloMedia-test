@@ -31,6 +31,7 @@ import AddMenu from "./components/menu/AddMenu.jsx";
 import UpdateMenu from "./components/menu/UpdateMenu.jsx";
 import ClientOrders from "./views/pages/ClientOrders";
 import AllRestaurants from "./views/pages/restaurant/AllRestaurants.jsx";
+import RestaurantMenus from "./components/menu/RestaurantMenus.jsx";
 import TrackingMap from "./views/maps/TrackingMap.jsx";
 import StartTracking from "./views/common/StartTracking.jsx";
 
@@ -74,6 +75,7 @@ function App() {
             element={<RestaurantPage />}
           />
           <Route path="/restaurants" element={<AllRestaurants/>} />
+          <Route path="/restaurantMenus/:id" element={<RestaurantMenus/>}/>
           {/* <Route path="/get-users" element={<LiveCoding/>}/> */}
           <Route path="/addMenu" element={<AddMenu />} />
           <Route path="/myMenu" element={<MyMenu />} />

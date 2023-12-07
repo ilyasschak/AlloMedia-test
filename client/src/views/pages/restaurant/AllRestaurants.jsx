@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
+import { Link } from "react-router-dom";
+
 export default function AllRestaurants(){
     const [restaurants, setRestaurants] = useState([]);
     
@@ -18,7 +20,7 @@ export default function AllRestaurants(){
 
     return (
       <div className="mx-4 my-4">
-        <h1 className="text-3xl text-center font-bold mb-4">Restaurants</h1>
+        <h1 className="text-7xl text-center font-bold mb-4">Restaurants</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {restaurants.map((restaurant) => (
             <div
@@ -36,9 +38,9 @@ export default function AllRestaurants(){
               <p className="text-gray-500 mb-2">
                 {restaurant.typeCuisine.name}
               </p>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+              <Link to={`/restaurantMenus/${restaurant._id}`} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                 Show Menus
-              </button>
+              </Link>
             </div>
           ))}
         </div>

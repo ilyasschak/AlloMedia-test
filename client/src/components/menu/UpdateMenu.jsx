@@ -119,7 +119,99 @@ export default function UpdateMenu() {
       onSubmit={updateMenu}
     >
       {({ values }) => (
-        <Form className="m-auto">
+        // <Form className="m-auto">
+        //   {/* {errorMessage && <ErrorAlert message={errorMessage} />} */}
+        //   <div className="flex flex-col">
+        //     <label htmlFor="menuName">Menu Name:</label>
+        //     <Field
+        //       id="menuName"
+        //       name="menuName"
+        //       type="text"
+        //       placeholder="menu name"
+        //     />
+        //     <ErrorMessage name="menuName" component="div" />
+        //   </div>
+
+        //   <label htmlFor="restaurant">Restaurants:</label>
+        //   {restaurants.length !== 0 ? (
+        //     <div className="flex flex-col">
+        //       <Field as="select" id="restaurant" name="restaurant">
+        //         {restaurants.map((restaurant) => (
+        //           <option key={restaurant._id} value={restaurant._id}>
+        //             {restaurant.nom}
+        //           </option>
+        //         ))}
+        //       </Field>
+        //     </div>
+        //   ) : (
+        //     <div className="text-red-700">You don't have any restaurants!</div>
+        //   )}
+
+        //   <FieldArray name="articles">
+        //     {({ push, remove }) => (
+        //       <div className="flex flex-col">
+        //         <h3>Articles</h3>
+        //         {values.articles.map((article, index) => (
+        //           <div key={index} className="flex flex-col">
+        //             <label htmlFor={`articles.${index}.Plat`}>Plat:</label>
+        //             <Field
+        //               id={`articles.${index}.Plat`}
+        //               name={`articles.${index}.Plat`}
+        //               type="text"
+        //               placeholder="Plat"
+        //             />
+        //             <ErrorMessage
+        //               name={`articles.${index}.Plat`}
+        //               component="div"
+        //             />
+
+        //             <label htmlFor={`articles.${index}.prix`}>Prix:</label>
+        //             <Field
+        //               id={`articles.${index}.prix`}
+        //               name={`articles.${index}.prix`}
+        //               type="number"
+        //               placeholder="prix"
+        //             />
+        //             <ErrorMessage
+        //               name={`articles.${index}.prix`}
+        //               component="div"
+        //             />
+
+        //             <label htmlFor={`articles.${index}.description`}>
+        //               Description:
+        //             </label>
+        //             <Field
+        //               id={`articles.${index}.description`}
+        //               name={`articles.${index}.description`}
+        //               type="text"
+        //               placeholder="description"
+        //             />
+        //             <ErrorMessage
+        //               name={`articles.${index}.description`}
+        //               component="div"
+        //             />
+
+        //             <button type="button" onClick={() => remove(index)}>
+        //               Remove Article
+        //             </button>
+        //           </div>
+        //         ))}
+
+        //         <button
+        //           type="button"
+        //           onClick={() => push({ Plat: "", prix: "", description: "" })}
+        //         >
+        //           Add Article
+        //         </button>
+        //       </div>
+        //     )}
+        //   </FieldArray>
+
+        //   <button type="submit" className=" text-white bg-brand transform-none">
+        //     Submit
+        //   </button>
+        // </Form>
+        <Form className="m-auto bg-red-100 w-w-max-content py-13 px-20">
           {/* {errorMessage && <ErrorAlert message={errorMessage} />} */}
           <div className="flex flex-col">
             <label htmlFor="menuName">Menu Name:</label>
@@ -135,7 +227,12 @@ export default function UpdateMenu() {
           <label htmlFor="restaurant">Restaurants:</label>
           {restaurants.length !== 0 ? (
             <div className="flex flex-col">
-              <Field as="select" id="restaurant" name="restaurant">
+              <Field
+                as="select"
+                id="restaurant"
+                name="restaurant"
+                style={{ "min-width": "280px" }}
+              >
                 {restaurants.map((restaurant) => (
                   <option key={restaurant._id} value={restaurant._id}>
                     {restaurant.nom}
@@ -144,7 +241,7 @@ export default function UpdateMenu() {
               </Field>
             </div>
           ) : (
-            <div className="text-red-700">You don't have any restaurants!</div>
+            <div className="text-red-700">You don't have any restaurants !</div>
           )}
 
           <FieldArray name="articles">
@@ -191,7 +288,11 @@ export default function UpdateMenu() {
                       component="div"
                     />
 
-                    <button type="button" onClick={() => remove(index)}>
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="mb-7 text-white bg-red-700"
+                    >
                       Remove Article
                     </button>
                   </div>
@@ -199,7 +300,8 @@ export default function UpdateMenu() {
 
                 <button
                   type="button"
-                  onClick={() => push({ Plat: "", prix: "", description: "" })}
+                  onClick={() => push({ plat: "", prix: "", description: "" })}
+                  className="mt-1 text-white bg-red-700"
                 >
                   Add Article
                 </button>
@@ -207,7 +309,10 @@ export default function UpdateMenu() {
             )}
           </FieldArray>
 
-          <button type="submit" className=" text-white bg-brand transform-none">
+          <button
+            type="submit"
+            className=" text-white bg-red-800 transform-none my-10"
+          >
             Submit
           </button>
         </Form>

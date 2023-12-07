@@ -1,4 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import liv3 from "../../../assets/images/help.jpg"
 import * as Yup from "yup";
 import axios from "axios";
 import { useState } from "react";
@@ -41,6 +42,15 @@ export default function SearchRestaurant() {
 
   return (
     <>
+      <style>
+        {`
+        body {
+          background: url("./src/assets/images/help.jpg") no-repeat center center fixed;
+          background-size: cover;
+        }
+      `}
+      </style>
+
       {!isSubmitted ? (
         <Formik
           initialValues={{
@@ -50,7 +60,7 @@ export default function SearchRestaurant() {
           onSubmit={search}
         >
           {() => (
-            <Form className="flex flex-col lg:flex-row w-auto m-auto">
+            <Form className="flex flex-col lg:flex-row w-auto m-auto px-10 bg-red-100">
               {/* {errorMessage && <ErrorAlert message={errorMessage} />} */}
               <div className="flex flex-col">
                 <Field
@@ -58,11 +68,16 @@ export default function SearchRestaurant() {
                   name="searchKeyword"
                   type="text"
                   placeholder="restaurant name or cuisine type"
+                  className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-200 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
                 <ErrorMessage name="searchKeyword" component="div" />
               </div>
               <div className="">
-                <button type="button" onClick={openModal}>
+                <button
+                  type="button"
+                  onClick={openModal}
+                  className="text-white transform-none bg-orange-600"
+                >
                   Search by Map
                 </button>
                 <PopupsController
@@ -74,12 +89,14 @@ export default function SearchRestaurant() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className=" text-white bg-brand transform-none"
-              >
-                Search
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  className=" text-white bg-orange-800 transform-none"
+                >
+                  Search
+                </button>
+              </div>
             </Form>
           )}
         </Formik>

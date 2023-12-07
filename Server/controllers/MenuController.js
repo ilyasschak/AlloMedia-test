@@ -112,6 +112,11 @@ class MenuController{
 
       res.send("updated successfully!")
     }
+
+    static async getMenuByRestaurant(req, res){
+      const menus = await Menu.find({restaurant : req.body.restaurantId});
+      res.send(menus);
+    }
 }
 
   module.exports = {MenuController}
