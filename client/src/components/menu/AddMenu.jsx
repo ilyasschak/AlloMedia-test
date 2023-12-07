@@ -68,7 +68,8 @@ export default function AddMenu() {
       });
   }
 
-  return restaurants.length !== 0 ? (
+  return( 
+  restaurants.length !== 0 ? (
     <Formik
       initialValues={{
         menuName: "",
@@ -79,7 +80,7 @@ export default function AddMenu() {
       onSubmit={submitMenu}
     >
       {({ values }) => (
-        <Form className="m-auto">
+        <Form className="m-auto bg-red-100 w-w-max-content py-13 px-20">
           {/* {errorMessage && <ErrorAlert message={errorMessage} />} */}
           <div className="flex flex-col">
             <label htmlFor="menuName">Menu Name:</label>
@@ -95,7 +96,12 @@ export default function AddMenu() {
           <label htmlFor="restaurant">Restaurants:</label>
           {restaurants.length !== 0 ? (
             <div className="flex flex-col">
-              <Field as="select" id="restaurant" name="restaurant">
+              <Field
+                as="select"
+                id="restaurant"
+                name="restaurant"
+                style={{ "min-width": "280px" }}
+              >
                 {restaurants.map((restaurant) => (
                   <option key={restaurant._id} value={restaurant._id}>
                     {restaurant.nom}
@@ -151,7 +157,11 @@ export default function AddMenu() {
                       component="div"
                     />
 
-                    <button type="button" onClick={() => remove(index)}>
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="mb-7 text-white bg-red-700"
+                    >
                       Remove Article
                     </button>
                   </div>
@@ -160,6 +170,7 @@ export default function AddMenu() {
                 <button
                   type="button"
                   onClick={() => push({ plat: "", prix: "", description: "" })}
+                  className="mt-1 text-white bg-red-700"
                 >
                   Add Article
                 </button>
@@ -167,7 +178,10 @@ export default function AddMenu() {
             )}
           </FieldArray>
 
-          <button type="submit" className=" text-white bg-brand transform-none">
+          <button
+            type="submit"
+            className=" text-white bg-red-800 transform-none my-10"
+          >
             Submit
           </button>
         </Form>
@@ -180,5 +194,6 @@ export default function AddMenu() {
         <p>Add some and come back.</p>
       </div>
     </div>
-  );
+  )
+  )
 }

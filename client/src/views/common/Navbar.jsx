@@ -4,6 +4,8 @@ import dkjfjkdf from "../../assets/images/logg.png";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import api from "../../api";
+import { FaShoppingCart } from "react-icons/fa";
+
 
 const socket = io.connect("http://localhost:3000");
 
@@ -179,6 +181,35 @@ const Navbar = () => {
                   >
                     {commands.length}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {user._id && user.role.name === "Client" && (
+              <div className="relative inline-block text-left">
+                <div>
+                  <NavLink to={"/command"}>
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      id="menu-button"
+                      aria-expanded="true"
+                      aria-haspopup="true"
+                    >
+                      Commands
+                    </button>
+                  </NavLink>
+                </div>
+              </div>
+            )}
+
+            
+            {user._id && user.role.name === "Client" && (
+              <div className="relative inline-block text-left">
+                <div>
+                  <NavLink to={"/cart"}>
+                    <FaShoppingCart size={30} color="#000" />
+                  </NavLink>
                 </div>
               </div>
             )}

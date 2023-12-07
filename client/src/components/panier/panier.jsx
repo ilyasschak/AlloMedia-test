@@ -166,7 +166,7 @@ const Cart = () => {
                 <p>Panier Vide</p>
               )}
               <a
-                onClick={() => navigate("/menu")}
+                onClick={() => navigate("/")}
                 href="#"
                 className="flex font-semibold text-indigo-600 text-sm mt-10"
               >

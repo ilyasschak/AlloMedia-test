@@ -1,4 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import liv3 from "../../../assets/images/help.jpg"
 import * as Yup from "yup";
 import axios from "axios";
 import { useState } from "react";
@@ -41,6 +42,15 @@ export default function SearchRestaurant() {
 
   return (
     <>
+      <style>
+        {`
+        body {
+          background: url("./src/assets/images/help.jpg") no-repeat center center fixed;
+          background-size: cover;
+        }
+      `}
+      </style>
+
       {!isSubmitted ? (
         <Formik
           initialValues={{
@@ -50,7 +60,7 @@ export default function SearchRestaurant() {
           onSubmit={search}
         >
           {() => (
-            <Form className="flex flex-col lg:flex-row w-auto m-auto px-10">
+            <Form className="flex flex-col lg:flex-row w-auto m-auto px-10 bg-red-100">
               {/* {errorMessage && <ErrorAlert message={errorMessage} />} */}
               <div className="flex flex-col">
                 <Field
