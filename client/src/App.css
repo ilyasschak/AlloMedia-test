@@ -7,6 +7,7 @@
   width: 100%;
 }
 
+
 :root{
   --background-color : rgb(235, 242, 255);
 }
@@ -20,7 +21,7 @@
   font-family: 'Urbanist', sans-serif;
 }
 #root{
-  background-image: url(./assets/images/liv2.jpg);
+  /* background-image: url(./assets/images/liv2.jpg); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
