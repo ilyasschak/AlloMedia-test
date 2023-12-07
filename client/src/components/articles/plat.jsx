@@ -54,7 +54,7 @@ const Plat = () => {
 
   return (
     <div>
-      {plats ? (
+      {plats.length !== 0 ? (
         <div className="p-12">
           {plats.map((plat) => (
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-5">
@@ -138,7 +138,11 @@ const Plat = () => {
           ))}
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-center bg-red-100 p-32  rounded-xl">
+            <p className="text-5xl">No plats available</p>
+          </div>
+        </div>
       )}
     </div>
   );
