@@ -74,8 +74,8 @@ function App() {
             path="/restaurants/:restaurant_id"
             element={<RestaurantPage />}
           />
-          <Route path="/restaurants" element={<AllRestaurants/>} />
-          <Route path="/restaurantMenus/:id" element={<RestaurantMenus/>}/>
+          <Route path="/restaurants" element={<AllRestaurants />} />
+          <Route path="/restaurantMenus/:id" element={<RestaurantMenus />} />
           {/* <Route path="/get-users" element={<LiveCoding/>}/> */}
           <Route path="/addMenu" element={<AddMenu />} />
           <Route path="/myMenu" element={<MyMenu />} />

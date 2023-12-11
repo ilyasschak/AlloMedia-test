@@ -13,7 +13,7 @@ const OrdersTable = ({ orders, role, toggleMap }) => {
   const calculateThePrice = (articles) => {
     let count = 0;
     articles.forEach((article) => {
-      count += article._id.prix * article.quantite;
+      count += article?._id?.prix * article.quantite;
     });
     return count;
   };
@@ -114,7 +114,7 @@ const OrdersTable = ({ orders, role, toggleMap }) => {
                                     className="mb-1 font-semibold transition-colors duration-200 ease-in-out  text-[0.90rem] text-secondary-inverse hover:text-primary"
                                   >
                                     {" "}
-                                    {article._id.Plat}{" "}
+                                    {article?._id?.Plat}{" "}
                                   </a>
                                 ))}
                               </div>
